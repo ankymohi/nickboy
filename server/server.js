@@ -10,27 +10,23 @@ import bunnyRoutes from "./routes/bunnyRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
+
 const app = express();
 
 // ------------------------------
-// ✅ FIXED CORS (ONLY THIS ONE)
+// CORS CONFIG
 // ------------------------------
 const allowedOrigins = [
-  "https://agenciavgd.vercel.app",
-  "https://agenciavgd-xy81.vercel.app",
-  "https://agenciavgd-anwr.vercel.app",
-
-  // ✅ ADD THESE TWO
+  "http://localhost:3000", // local dev
+  "https://nickboy-git-main-mohits-projects-794aad26.vercel.app", // your Vercel frontend
   "https://nickboy.com.br",
   "https://www.nickboy.com.br",
-
-  "http://localhost:3000"
 ];
-
 
 app.use(
   cors({
     origin: function (origin, callback) {
+      // allow requests with no origin (mobile apps, curl, postman)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -38,21 +34,27 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    credentials: true, // needed if you use cookies or sessions
   })
 );
 
+// ------------------------------
+// BODY PARSER
+// ------------------------------
 app.use(express.json());
 
 // ------------------------------
 // ROUTES
 // ------------------------------
-app.use("/api/auth", authRoutes);
+// Public routes
+app.use("/api/auth", authRoutes); // login, register, etc.
+
+// Protected routes (example: admin, images)
 app.use("/api/images", bunnyRoutes);
 app.use("/api/admin", adminRoutes);
 
-app.get("/", (req, res) => res.send("API is running successfully 🚀"));
+// Health check
+app.get("/", (req, res) => res.send("API is running 🚀"));
 
 // ------------------------------
 // MERCADO PAGO CONFIG
@@ -61,7 +63,6 @@ const MP_TOKEN = process.env.MP_ACCESS_TOKEN;
 if (!MP_TOKEN) {
   console.warn("⚠️ MP_ACCESS_TOKEN not set in .env — Mercado Pago calls will fail.");
 }
-
 const client = new MercadoPagoConfig({ accessToken: MP_TOKEN });
 
 // ------------------------------
@@ -70,44 +71,35 @@ const client = new MercadoPagoConfig({ accessToken: MP_TOKEN });
 app.post("/create-preference", async (req, res) => {
   try {
     const { plan } = req.body;
-
-    if (!plan || !plan.name || !plan.price) {
+    if (!plan || !plan.name || !plan.price)
       return res.status(400).json({ error: "Invalid plan data" });
-    }
 
-   const body = {
-  items: [
-    {
-      title: plan.name,
-      quantity: 1,
-      currency_id: "BRL",
-      unit_price: parseFloat(plan.price),
-    },
-  ],
-  back_urls: {
-  success: "https://www.nickboy.com.br/payment-success",
-  failure: "https://www.nickboy.com.br/payment-failure",
-  pending: "https://www.nickboy.com.br/payment-pending",
-},
-
-  auto_return: "approved",
-
-  // 🔹 ADD THIS
-  metadata: {
-    userId: plan.userId,
-    planName: plan.name,
-  },
-};
-
+    const body = {
+      items: [
+        {
+          title: plan.name,
+          quantity: 1,
+          currency_id: "BRL",
+          unit_price: parseFloat(plan.price),
+        },
+      ],
+      back_urls: {
+        success: "https://www.nickboy.com.br/payment-success",
+        failure: "https://www.nickboy.com.br/payment-failure",
+        pending: "https://www.nickboy.com.br/payment-pending",
+      },
+      auto_return: "approved",
+      metadata: {
+        userId: plan.userId,
+        planName: plan.name,
+      },
+    };
 
     const preference = new Preference(client);
     const result = await preference.create({ body });
 
     const prefId = result?.id || result?.body?.id;
-    if (!prefId) {
-      console.error("No preference id returned from Mercado Pago:", result);
-      return res.status(500).json({ error: "No preference id returned from MP" });
-    }
+    if (!prefId) return res.status(500).json({ error: "No preference id returned" });
 
     return res.json({ id: prefId });
   } catch (err) {
@@ -120,22 +112,17 @@ app.post("/create-preference", async (req, res) => {
 // WEBHOOK
 // ------------------------------
 app.post("/webhook/mercadopago", async (req, res) => {
-  console.log("🔔 Webhook received:", req.body);
-
   try {
     const { data, type } = req.body;
-
     if (type === "payment") {
       const paymentId = data.id;
 
       const paymentInfo = await fetch(
         `https://api.mercadopago.com/v1/payments/${paymentId}`,
         {
-          headers: { Authorization: `Bearer ${MP_TOKEN}` }
+          headers: { Authorization: `Bearer ${MP_TOKEN}` },
         }
-      ).then(res => res.json());
-
-      console.log("Payment Info:", paymentInfo);
+      ).then((res) => res.json());
 
       if (paymentInfo.status === "approved") {
         const userId = paymentInfo.metadata?.userId;
@@ -146,19 +133,16 @@ app.post("/webhook/mercadopago", async (req, res) => {
             plan: planName,
             planStatus: "active",
           });
-
           console.log("🎉 User Plan Activated:", userId);
         }
       }
     }
-
     res.status(200).send("OK");
-  } catch (error) {
-    console.error("Webhook Error:", error);
+  } catch (err) {
+    console.error("Webhook Error:", err);
     res.status(500).send("Webhook Error");
   }
 });
-
 
 // ------------------------------
 // MONGO CONNECTION
