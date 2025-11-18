@@ -40,10 +40,9 @@ export default function LoginPage() {
     }
 
     const endpoint = isLogin ? 'login' : 'signup';
-    const API_BASE_URL = process.env.REACT_APP_API_URL || "https://nickboy-1.onrender.com";
-
-
+    const API_BASE_URL = (process.env.REACT_APP_API_URL || 'http://localhost:5000').replace(/\/$/, '');
 const url = `${API_BASE_URL}/api/auth/${endpoint}`;
+
 
     try {
       const res = await fetch(url, {
