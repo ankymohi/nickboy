@@ -34,7 +34,7 @@ const promoPrices = {
  const plans = [
   {
     name: "Pack 1",
-    price: "0.99",
+    price: "0.12",
     originalPrice: "0",
     duration: "Acesso único",
     features: [
@@ -85,47 +85,59 @@ const promoPrices = {
   };
 
   const handleConfirmPayment = async (plan = selectedPlan) => {
-    if (!plan) {
-      alert("Selecione um plano primeiro.");
-      return;
-    }
-    if (!user) {
-      alert("Por favor, faça login primeiro!");
-      navigate("/login");
-      return;
-    }
+  if (!plan) {
+    alert("Selecione um plano primeiro.");
+    return;
+  }
+  if (!user) {
+    alert("Por favor, faça login primeiro!");
+    navigate("/login");
+    return;
+  }
 
-    setIsProcessing(true);
-    try {
-      const response = await fetch("http://localhost:5000/create-preference", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
-      });
+  setIsProcessing(true);
+  try {
+    const response = await fetch("http://localhost:5000/create-preference", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        plan: plan,
+        userId: user.id || user._id  // ✅ ADD THIS - send user ID
+      }),
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (!response.ok) {
-        console.error("Create preference failed:", data);
-        alert("Erro ao iniciar o pagamento. Veja console.");
-        setIsProcessing(false);
-        return;
-      }
-
-      if (data.id) {
-        window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
-        return;
-      } else {
-        console.error("No preference id returned:", data);
-        alert("Erro ao iniciar o pagamento. Sem preference id.");
-      }
-    } catch (err) {
-      console.error("Erro ao conectar com o servidor de pagamento:", err);
-      alert("Erro ao conectar com o servidor de pagamento!");
-    } finally {
+    if (!response.ok) {
+      console.error("Create preference failed:", data);
+      alert("Erro ao iniciar o pagamento. Veja console.");
       setIsProcessing(false);
+      return;
     }
-  };
+
+    if (data.id) {
+      // ✅ Store payment info in localStorage for success page
+      localStorage.setItem('pendingPayment', JSON.stringify({
+        planName: plan.name,
+        userId: user.id || user._id,
+        timestamp: Date.now()
+      }));
+      
+      window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
+      return;
+    } else {
+      console.error("No preference id returned:", data);
+      alert("Erro ao iniciar o pagamento. Sem preference id.");
+    }
+  } catch (err) {
+    console.error("Erro ao conectar com o servidor de pagamento:", err);
+    alert("Erro ao conectar com o servidor de pagamento!");
+  } finally {
+    setIsProcessing(false);
+  }
+};
+
+
 
   return (
     <div style={{
