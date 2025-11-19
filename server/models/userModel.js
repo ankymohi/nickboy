@@ -14,20 +14,36 @@ const userSchema = new mongoose.Schema(
       enum: ["free", "basic", "premium", "vip"],
       default: "free"
     },
+
     subscriptionStatus: {
       type: String,
       enum: ["pending", "active", "canceled"],
-      default: "pending" // ✅ FIXED: Changed from "free" to "pending"
+      default: "pending"
     },
+
     subscriptionId: {
       type: String,
       default: null
     },
+
     paymentId: {
       type: String,
       default: null
     },
+
     planExpiry: {
+      type: Date,
+      default: null
+    },
+
+    // 🔵 NEW FIELDS YOU ASKED TO ADD
+    planStatus: {
+      type: String,
+      enum: ["active", "inactive", "pending"],
+      default: "inactive"
+    },
+
+    lastPaymentDate: {
       type: Date,
       default: null
     },
