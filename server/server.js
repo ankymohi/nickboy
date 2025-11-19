@@ -1,4 +1,3 @@
-// server.js
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -8,25 +7,24 @@ import { MercadoPagoConfig, Preference } from "mercadopago";
 import authRoutes from "./routes/authRoutes.js";
 import bunnyRoutes from "./routes/bunnyRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import User from "./models/userModel.js"; // ✅ ADD THIS LINE
 
 dotenv.config();
-
 const app = express();
 
-// ------------------------------
-// CORS CONFIG
-// ------------------------------
+// CORS Config (your existing code is fine)
 const allowedOrigins = [
-  "http://localhost:3000", // local dev
-  "https://nickboy-git-main-mohits-projects-794aad26.vercel.app", // your Vercel frontend
+  "https://agenciavgd.vercel.app",
+  "https://agenciavgd-xy81.vercel.app",
+  "https://agenciavgd-anwr.vercel.app",
   "https://nickboy.com.br",
   "https://www.nickboy.com.br",
+  "http://localhost:3000"
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (mobile apps, curl, postman)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -34,45 +32,45 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // needed if you use cookies or sessions
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 
-// ------------------------------
-// BODY PARSER
-// ------------------------------
 app.use(express.json());
 
-// ------------------------------
-// ROUTES
-// ------------------------------
-// Public routes
-app.use("/api/auth", authRoutes); // login, register, etc.
-
-// Protected routes (example: admin, images)
+// Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/images", bunnyRoutes);
 app.use("/api/admin", adminRoutes);
 
-// Health check
-app.get("/", (req, res) => res.send("API is running 🚀"));
+app.get("/", (req, res) => res.send("API is running successfully 🚀"));
 
-// ------------------------------
-// MERCADO PAGO CONFIG
-// ------------------------------
+// Mercado Pago Config
 const MP_TOKEN = process.env.MP_ACCESS_TOKEN;
 if (!MP_TOKEN) {
-  console.warn("⚠️ MP_ACCESS_TOKEN not set in .env — Mercado Pago calls will fail.");
+  console.warn("⚠️ MP_ACCESS_TOKEN not set in .env");
 }
+
 const client = new MercadoPagoConfig({ accessToken: MP_TOKEN });
 
-// ------------------------------
-// CREATE PREFERENCE
-// ------------------------------
+// ============================================
+// 2️⃣ FIX: CREATE PREFERENCE - ADD NOTIFICATION URL & USER ID
+// ============================================
 app.post("/create-preference", async (req, res) => {
   try {
-    const { plan } = req.body;
-    if (!plan || !plan.name || !plan.price)
+    const { plan, userId } = req.body; // ✅ ADD userId
+
+    if (!plan || !plan.name || !plan.price) {
       return res.status(400).json({ error: "Invalid plan data" });
+    }
+
+    if (!userId) {
+      return res.status(400).json({ error: "User ID is required" });
+    }
+
+    // ✅ YOUR BACKEND URL - CHANGE THIS TO YOUR DEPLOYED URL
+    const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:5000";
 
     const body = {
       items: [
@@ -89,18 +87,33 @@ app.post("/create-preference", async (req, res) => {
         pending: "https://www.nickboy.com.br/payment-pending",
       },
       auto_return: "approved",
+      
+      // ✅ CRITICAL: Add notification URL for webhook
+      notification_url: `${BACKEND_URL}/webhook/mercadopago`,
+      
+      // ✅ Store user and plan info
       metadata: {
-        userId: plan.userId,
+        userId: userId,
         planName: plan.name,
       },
+      
+      // ✅ Alternative: use external_reference
+      external_reference: JSON.stringify({
+        userId: userId,
+        planName: plan.name
+      })
     };
 
     const preference = new Preference(client);
     const result = await preference.create({ body });
 
     const prefId = result?.id || result?.body?.id;
-    if (!prefId) return res.status(500).json({ error: "No preference id returned" });
+    if (!prefId) {
+      console.error("No preference id returned from Mercado Pago:", result);
+      return res.status(500).json({ error: "No preference id returned from MP" });
+    }
 
+    console.log("✅ Preference created for user:", userId, "Plan:", plan.name);
     return res.json({ id: prefId });
   } catch (err) {
     console.error("Error creating preference:", err);
@@ -108,52 +121,117 @@ app.post("/create-preference", async (req, res) => {
   }
 });
 
-// ------------------------------
-// WEBHOOK
-// ------------------------------
+// ============================================
+// 3️⃣ FIX: WEBHOOK - PROPERLY UPDATE USER PLAN
+// ============================================
 app.post("/webhook/mercadopago", async (req, res) => {
+  console.log("🔔 Webhook received:", JSON.stringify(req.body, null, 2));
+
+  // ✅ Always respond 200 immediately to Mercado Pago
+  res.status(200).send("OK");
+
   try {
     const { data, type } = req.body;
+
+    // Only process payment notifications
     if (type === "payment") {
       const paymentId = data.id;
+      console.log("💳 Processing payment ID:", paymentId);
 
-      const paymentInfo = await fetch(
+      // Fetch full payment details from Mercado Pago
+      const paymentResponse = await fetch(
         `https://api.mercadopago.com/v1/payments/${paymentId}`,
         {
-          headers: { Authorization: `Bearer ${MP_TOKEN}` },
+          headers: { Authorization: `Bearer ${MP_TOKEN}` }
         }
-      ).then((res) => res.json());
+      );
 
+      const paymentInfo = await paymentResponse.json();
+      console.log("📄 Payment Info:", JSON.stringify(paymentInfo, null, 2));
+
+      // ✅ Check if payment is approved
       if (paymentInfo.status === "approved") {
-        const userId = paymentInfo.metadata?.userId;
-        const planName = paymentInfo.metadata?.planName;
+        // Try to get userId from metadata first, then external_reference
+        let userId = paymentInfo.metadata?.user_id || paymentInfo.metadata?.userId;
+        let planName = paymentInfo.metadata?.plan_name || paymentInfo.metadata?.planName;
+
+        // If not in metadata, try external_reference
+        if (!userId && paymentInfo.external_reference) {
+          try {
+            const refData = JSON.parse(paymentInfo.external_reference);
+            userId = refData.userId;
+            planName = refData.planName;
+          } catch (e) {
+            console.error("Error parsing external_reference:", e);
+          }
+        }
+
+        console.log("👤 Extracted - UserId:", userId, "Plan:", planName);
 
         if (userId) {
-          await User.findByIdAndUpdate(userId, {
-            plan: planName,
-            planStatus: "active",
-          });
-          console.log("🎉 User Plan Activated:", userId);
+          // ✅ Update user in database
+          const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {
+              plan: planName,
+              planStatus: "active",
+              paymentId: paymentId,
+              lastPaymentDate: new Date()
+            },
+            { new: true }
+          );
+
+          if (updatedUser) {
+            console.log("🎉 SUCCESS! User plan activated:", {
+              userId: updatedUser._id,
+              plan: updatedUser.plan,
+              planStatus: updatedUser.planStatus
+            });
+          } else {
+            console.error("❌ User not found with ID:", userId);
+          }
+        } else {
+          console.error("❌ No userId found in payment metadata or external_reference");
         }
+      } else {
+        console.log("⏳ Payment not approved yet. Status:", paymentInfo.status);
       }
     }
-    res.status(200).send("OK");
-  } catch (err) {
-    console.error("Webhook Error:", err);
-    res.status(500).send("Webhook Error");
+  } catch (error) {
+    console.error("❌ Webhook Error:", error);
   }
 });
 
-// ------------------------------
-// MONGO CONNECTION
-// ------------------------------
+// ============================================
+// 4️⃣ NEW: GET USER ENDPOINT (for success page polling)
+// ============================================
+app.get("/api/users/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      plan: user.plan,
+      planStatus: user.planStatus
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// MongoDB Connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ MongoDB Connection Error:", err));
 
-// ------------------------------
-// START SERVER
-// ------------------------------
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
