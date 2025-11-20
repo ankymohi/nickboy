@@ -13,6 +13,13 @@ const promoPrices = {
   "Pack 2": { price: "69.99", originalPrice: "99.99" },
   "Pack 3": { price: "209.99", originalPrice: "299.99" },
 };
+useEffect(() => {
+  if (window.MercadoPago) {
+    const mp = new window.MercadoPago(process.env.REACT_APP_MP_PUBLIC_KEY, {
+      locale: "pt-BR",
+    });
+  }
+}, []);
 
   useEffect(() => {
     try {
