@@ -13,32 +13,7 @@ const promoPrices = {
   "Pack 2": { price: "69.99", originalPrice: "99.99" },
   "Pack 3": { price: "209.99", originalPrice: "299.99" },
 };
-useEffect(() => {
-  if (window.MercadoPago) {
-    const mp = new window.MercadoPago(process.env.REACT_APP_MP_PUBLIC_KEY, {
-      locale: "pt-BR",
-    });
-  }
-}, []);
-
-  useEffect(() => {
-    try {
-      const userData = JSON.parse(localStorage.getItem("user"));
-      setUser(userData);
-
-      if (location.state?.plan) {
-        const planName = location.state.plan.toLowerCase().replace("pack ", "pack");
-        const planData = plans.find(p => p.name.toLowerCase() === planName.toLowerCase());
-        if (planData) {
-          setSelectedPlan(planData);
-        }
-      }
-    } catch (error) {
-      console.error("Error loading user data:", error);
-    }
-  }, [location.state]);
-
- const plans = [
+   const plans = [
   {
     name: "Pack 1",
     price: "1.00",
@@ -79,6 +54,32 @@ useEffect(() => {
     color: "from-amber-500 to-orange-500"
   }
 ];
+
+
+useEffect(() => {
+  if (window.MercadoPago) {
+    const mp = new window.MercadoPago(process.env.REACT_APP_MP_PUBLIC_KEY, {
+      locale: "pt-BR",
+    });
+  }
+}, []);
+
+  useEffect(() => {
+    try {
+      const userData = JSON.parse(localStorage.getItem("user"));
+      setUser(userData);
+
+      if (location.state?.plan) {
+        const planName = location.state.plan.toLowerCase().replace("pack ", "pack");
+        const planData = plans.find(p => p.name.toLowerCase() === planName.toLowerCase());
+        if (planData) {
+          setSelectedPlan(planData);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading user data:", error);
+    }
+  }, [location.state]);
 
 
   const handleSelectPlan = (plan) => {
