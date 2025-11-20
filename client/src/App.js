@@ -25,9 +25,10 @@ function App() {
         {/* Promo checkout — NEW */}
         <Route path="/promo-checkout" element={<PromoCheckout />} />  {/* ✅ */}
 
-        <Route path="/success" element={<Success />} />
-        <Route path="/failure" element={<div>Pagamento falhou</div>} />
-        <Route path="/pending" element={<div>Pagamento pendente</div>} />
+       <Route path="/payment-success" element={<Success />} />
+<Route path="/payment-failure" element={<div>Pagamento falhou</div>} />
+<Route path="/payment-pending" element={<div>Pagamento pendente</div>} />
+
 
         {/* Protected Dashboard route */}
         <Route
