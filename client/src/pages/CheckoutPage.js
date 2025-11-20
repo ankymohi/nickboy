@@ -34,7 +34,7 @@ const promoPrices = {
  const plans = [
   {
     name: "Pack 1",
-    price: "0.12",
+    price: "1.00",
     originalPrice: "0",
     duration: "Acesso único",
     features: [
