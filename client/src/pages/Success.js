@@ -6,41 +6,63 @@ export default function PaymentSuccess() {
   const [message, setMessage] = useState("Pagamento recebido! Confirmando com o banco...");
   const [attempts, setAttempts] = useState(0);
 
+  // ✅ Extract userId and planName from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  let externalRef = urlParams.get("external_reference");
+
+  let userId = null;
+  let planName = null;
+
+  try {
+    if (externalRef) {
+      const parsed = JSON.parse(externalRef);
+      userId = parsed.userId;
+      planName = parsed.planName;
+    }
+  } catch (e) {
+    console.error("❌ Failed to parse external_reference", e);
+  }
+
   useEffect(() => {
-    const MAX_ATTEMPTS = 20; // Try for 1 minute (20 attempts x 3 seconds)
+    const MAX_ATTEMPTS = 20; // 1 minute polling
     
     async function checkPlan() {
       try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (!user || !user.id) {
-          throw new Error("Usuário não encontrado");
+        // ❌ STOP using localStorage → it is empty after redirect
+        if (!userId) {
+          setMessage("Erro: userId não encontrado no pagamento.");
+          return;
         }
 
         const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
-        
-        console.log(`🔍 Checking plan status (attempt ${attempts + 1})...`);
-        
-        const res = await fetch(`${API_BASE_URL}/api/users/${user.id}`);
+
+        console.log(`🔍 Checking plan status for: ${userId} (attempt ${attempts + 1})`);
+
+        const res = await fetch(`${API_BASE_URL}/api/users/${userId}`);
         const data = await res.json();
 
         console.log("User data:", data);
 
         if (data.planStatus === "active" && data.plan !== "free") {
           setMessage("✅ Plano ativo! Redirecionando para o dashboard...");
-          
-          // Update localStorage with new plan
-          const updatedUser = { ...user, plan: data.plan, planStatus: data.planStatus };
-          localStorage.setItem("user", JSON.stringify(updatedUser));
-          
+
+          // Optional: update localStorage
+          localStorage.setItem("user", JSON.stringify(data));
+
           // Redirect after 2 seconds
           setTimeout(() => navigate("/dashboard"), 2000);
-        } else if (attempts < MAX_ATTEMPTS) {
+          return;
+        }
+
+        // Retry until MAX_ATTEMPTS
+        if (attempts < MAX_ATTEMPTS) {
           setMessage(`Processando pagamento... (${attempts + 1}/${MAX_ATTEMPTS})`);
           setAttempts(attempts + 1);
-          setTimeout(checkPlan, 3000); // Try again in 3 seconds
+          setTimeout(checkPlan, 3000);
         } else {
           setMessage("⚠️ O pagamento está demorando mais que o esperado. Verifique seu email ou contate o suporte.");
         }
+
       } catch (err) {
         console.error("Error checking plan:", err);
         setMessage("Erro ao verificar plano: " + err.message);
@@ -48,7 +70,7 @@ export default function PaymentSuccess() {
     }
 
     checkPlan();
-  }, [attempts, navigate]);
+  }, [attempts, navigate, userId]);
 
   return (
     <div style={{ 
