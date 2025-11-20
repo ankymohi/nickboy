@@ -57,12 +57,16 @@ const promoPrices = {
 
 
 useEffect(() => {
-  if (window.MercadoPago) {
+  if (window.MercadoPago && process.env.REACT_APP_MP_PUBLIC_KEY) {
     const mp = new window.MercadoPago(process.env.REACT_APP_MP_PUBLIC_KEY, {
       locale: "pt-BR",
     });
+    console.log("MercadoPago loaded:", mp);
+  } else {
+    console.error("MercadoPago SDK or Public Key missing");
   }
 }, []);
+
 
   useEffect(() => {
     try {
