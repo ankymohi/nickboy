@@ -11,9 +11,7 @@ export default function PromoCheckout() {
   useEffect(() => {
     // Check if user is logged in
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(localStorage.getItem("user"));
-
-    if (!user?._id) {
+    if (!user?.id) {
       alert("Você precisa estar logado para acessar esta promoção.");
       navigate("/login");
       return;
@@ -34,28 +32,23 @@ export default function PromoCheckout() {
       price: promoPrice,
       originalPrice: location.state.originalPrice || null,
       duration: "Acesso único",
-      features: [
-        "Conteúdo Premium",
-        "Atualizações incluídas",
-        "Entrega imediata",
-      ],
-      userId: user._id, // <-- send userId to backend
+      features: ["Conteúdo Premium", "Atualizações incluídas", "Entrega imediata"],
     };
 
     setPromoPlan(planData);
 
     // Auto-start payment
-    startPayment(planData);
+    startPayment(planData, user.id);
   }, [location.state, navigate]);
 
-  const startPayment = async (plan) => {
+  const startPayment = async (plan, userId) => {
     try {
       setIsProcessing(true);
 
-      const response = await fetch("http://localhost:5000/create-preference", {
+      const response = await fetch("https://nickboy.onrender.com/create-preference", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
+        body: JSON.stringify({ plan, userId }), // send userId to backend
       });
 
       const data = await response.json();
@@ -67,7 +60,7 @@ export default function PromoCheckout() {
         return;
       }
 
-      // Redirect user to MercadoPago
+      // Redirect user to MercadoPago checkout
       window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
     } catch (err) {
       console.error(err);
@@ -99,12 +92,9 @@ export default function PromoCheckout() {
             <p style={{ fontSize: "20px", marginBottom: 10 }}>
               Plano: <strong>{promoPlan.name}</strong>
             </p>
-
             <p style={{ fontSize: "22px", marginBottom: 20 }}>
               Preço Promocional:{" "}
-              <strong style={{ color: "#4ade80" }}>
-                R$ {promoPlan.price}
-              </strong>
+              <strong style={{ color: "#4ade80" }}>R$ {promoPlan.price}</strong>
             </p>
           </>
         )}
