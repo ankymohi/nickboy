@@ -192,7 +192,7 @@ const plans = [
       Nickboy — seu corre 
       <span class="vgd-hero-18-badgeName">+18 </span>
     </h1>
-    <button className="vgd-hero-btn">Assine agora</button>
+    <button className="vgd-hero-btn" onClick={() => navigate("/login")}>Assine agora</button>
   </div>
 </section>
 
