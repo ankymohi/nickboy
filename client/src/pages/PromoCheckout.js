@@ -11,6 +11,8 @@ export default function PromoCheckout() {
   useEffect(() => {
     // Check if user is logged in
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log(localStorage.getItem("user"));
+
     if (!user?._id) {
       alert("Você precisa estar logado para acessar esta promoção.");
       navigate("/login");
