@@ -26,9 +26,10 @@ try {
 // PIX fallback → MP does NOT send external_reference on PIX
 if (!userId) {
   const localUser = JSON.parse(localStorage.getItem("user"));
-  userId = localUser?._id;
+  userId = localUser?._id || localUser?.id || localUser?.userId;
   planName = localUser?.plan;
 }
+
 
 
   useEffect(() => {
