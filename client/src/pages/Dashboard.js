@@ -50,7 +50,7 @@ const promo = isPack1
   ? {
       title: "Oferta Especial!",
       text: "Atualize para o Pack 2 com 30% de desconto!",
-      price: "69.99",
+      price: "1",
       button: "Atualizar agora",
       action: () =>
   navigate("/promo-checkout", {
