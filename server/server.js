@@ -70,7 +70,8 @@ app.post("/create-preference", async (req, res) => {
     }
 
     // ✅ YOUR BACKEND URL - CHANGE THIS TO YOUR DEPLOYED URL
-    const BACKEND_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+   const BACKEND_URL = "https://nickboy.onrender.com";  // FIXED
+
 
     const body = {
       items: [
@@ -89,7 +90,8 @@ app.post("/create-preference", async (req, res) => {
       auto_return: "approved",
       
       // ✅ CRITICAL: Add notification URL for webhook
-      notification_url: `${BACKEND_URL}/webhook/mercadopago`,
+      notification_url: `https://nickboy.onrender.com/webhook/mercadopago`,
+
       
       // ✅ Store user and plan info
       metadata: {
