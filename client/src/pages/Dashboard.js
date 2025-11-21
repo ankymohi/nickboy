@@ -1266,6 +1266,37 @@ setPromoDismissed(true); // ONLY hides popup
           </div>
         </div>
       )}
+        {/* WhatsApp Floating Button */}
+<a
+  href="https://wa.me/5511987058492"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
+    backgroundColor: "#25D366",
+    color: "white",
+    borderRadius: "50%",
+    width: "60px",
+    height: "60px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "30px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+    zIndex: 10000,
+    cursor: "pointer",
+    textDecoration: "none",
+  }}
+>
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+    alt="WhatsApp"
+    style={{ width: "35px", height: "35px" }}
+  />
+</a>
+
     </div>
   );
 }
