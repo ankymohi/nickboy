@@ -7,6 +7,8 @@ export default function PromoCheckout() {
 
   const [promoPlan, setPromoPlan] = useState(null);
   const [isProcessing, setIsProcessing] = useState(true);
+console.log("localStorage keys:", Object.keys(localStorage));
+console.log("User from localStorage:", localStorage.getItem("user"));
 
   useEffect(() => {
     // Check if user is logged in
