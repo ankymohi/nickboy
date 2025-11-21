@@ -47,7 +47,7 @@ if (!userId) {
 
         console.log(`🔍 Checking plan status for: ${userId} (attempt ${attempts + 1})`);
 
-        const res = await fetch(`${API_BASE_URL}/api/users/${userId}`);
+        const res = await fetch(`${API_BASE_URL}api/users/${userId}`);
         const data = await res.json();
 
         console.log("User data:", data);
