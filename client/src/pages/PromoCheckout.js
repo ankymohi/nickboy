@@ -9,6 +9,14 @@ export default function PromoCheckout() {
   const [isProcessing, setIsProcessing] = useState(true);
 
   useEffect(() => {
+    // Check if user is logged in
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user?._id) {
+      alert("Você precisa estar logado para acessar esta promoção.");
+      navigate("/login");
+      return;
+    }
+
     // Validate incoming promotion data
     if (!location.state?.plan || !location.state?.promoPrice) {
       alert("Promoção inválida ou expirada.");
@@ -22,14 +30,14 @@ export default function PromoCheckout() {
     const planData = {
       name: planName,
       price: promoPrice,
-      originalPrice:
-        location.state.originalPrice || null, // optional
+      originalPrice: location.state.originalPrice || null,
       duration: "Acesso único",
       features: [
         "Conteúdo Premium",
         "Atualizações incluídas",
         "Entrega imediata",
       ],
+      userId: user._id, // <-- send userId to backend
     };
 
     setPromoPlan(planData);
@@ -39,44 +47,32 @@ export default function PromoCheckout() {
   }, [location.state, navigate]);
 
   const startPayment = async (plan) => {
-  try {
-    setIsProcessing(true);
+    try {
+      setIsProcessing(true);
 
-    // Get user info from localStorage (adjust key if needed)
-    const user = JSON.parse(localStorage.getItem("user"));
+      const response = await fetch("http://localhost:5000/create-preference", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan }),
+      });
 
-    if (!user?._id) {
-      alert("Usuário não autenticado.");
-      navigate("/login");
-      return;
-    }
+      const data = await response.json();
 
-    const response = await fetch("http://localhost:5000/create-preference", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        plan,
-        userId: user._id // <-- send user ID here
-      }),
-    });
+      if (!response.ok || !data.id) {
+        alert("Erro ao iniciar pagamento da promoção.");
+        console.error("MercadoPago error:", data);
+        setIsProcessing(false);
+        return;
+      }
 
-    const data = await response.json();
-
-    if (!response.ok || !data.id) {
-      alert("Erro ao iniciar pagamento da promoção.");
-      console.error("MercadoPago error:", data);
+      // Redirect user to MercadoPago
+      window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
+    } catch (err) {
+      console.error(err);
+      alert("Falha ao conectar ao servidor.");
       setIsProcessing(false);
-      return;
     }
-
-    // Redirect user to MercadoPago
-    window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
-  } catch (err) {
-    console.error(err);
-    alert("Falha ao conectar ao servidor.");
-    setIsProcessing(false);
-  }
-};
+  };
 
   return (
     <div
