@@ -42,7 +42,7 @@ export default function PromoCheckout() {
     try {
       setIsProcessing(true);
 
-      const response = await fetch("http://localhost:5000/create-preference", {
+      const response = await fetch("https://nickboy.onrender.com/create-preference", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan }),
