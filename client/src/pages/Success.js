@@ -6,22 +6,30 @@ export default function PaymentSuccess() {
   const [message, setMessage] = useState("Pagamento recebido! Confirmando com o banco...");
   const [attempts, setAttempts] = useState(0);
 
-  // ✅ Extract userId and planName from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  let externalRef = urlParams.get("external_reference");
+  // Try to read external_reference (works for CARD)
+const urlParams = new URLSearchParams(window.location.search);
+let externalRef = urlParams.get("external_reference");
 
-  let userId = null;
-  let planName = null;
+let userId = null;
+let planName = null;
 
-  try {
-    if (externalRef) {
-      const parsed = JSON.parse(externalRef);
-      userId = parsed.userId;
-      planName = parsed.planName;
-    }
-  } catch (e) {
-    console.error("❌ Failed to parse external_reference", e);
+try {
+  if (externalRef) {
+    const parsed = JSON.parse(externalRef);
+    userId = parsed.userId;
+    planName = parsed.planName;
   }
+} catch (e) {
+  console.error("❌ Failed to parse external_reference", e);
+}
+
+// PIX fallback → MP does NOT send external_reference on PIX
+if (!userId) {
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  userId = localUser?._id;
+  planName = localUser?.plan;
+}
+
 
   useEffect(() => {
     const MAX_ATTEMPTS = 20; // 1 minute polling
