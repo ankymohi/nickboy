@@ -39,31 +39,44 @@ export default function PromoCheckout() {
   }, [location.state, navigate]);
 
   const startPayment = async (plan) => {
-    try {
-      setIsProcessing(true);
+  try {
+    setIsProcessing(true);
 
-      const response = await fetch("https://nickboy.onrender.com/create-preference", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
-      });
+    // Get user info from localStorage (adjust key if needed)
+    const user = JSON.parse(localStorage.getItem("user"));
 
-      const data = await response.json();
-
-      if (!response.ok || !data.id) {
-        alert("Erro ao iniciar pagamento da promoção.");
-        console.error("MercadoPago error:", data);
-        setIsProcessing(false);
-        return;
-      }
-
-      // Redirect user to MercadoPago
-      window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
-    } catch (err) {
-      console.error(err);
-      alert("Falha ao conectar ao servidor.");
+    if (!user?._id) {
+      alert("Usuário não autenticado.");
+      navigate("/login");
+      return;
     }
-  };
+
+    const response = await fetch("http://localhost:5000/create-preference", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        plan,
+        userId: user._id // <-- send user ID here
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.id) {
+      alert("Erro ao iniciar pagamento da promoção.");
+      console.error("MercadoPago error:", data);
+      setIsProcessing(false);
+      return;
+    }
+
+    // Redirect user to MercadoPago
+    window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
+  } catch (err) {
+    console.error(err);
+    alert("Falha ao conectar ao servidor.");
+    setIsProcessing(false);
+  }
+};
 
   return (
     <div
