@@ -37,7 +37,7 @@ export default function SubscriberDashboard() {
 
   // ✅ Get user first
   const user = JSON.parse(localStorage.getItem("user"));
-  const plan = user?.plan?.toLowerCase() || "basic"; // fallback to 'basic' if not fou
+  const plan = user?.plan?.toLowerCase() || "plan1"; // fallback to 'basic' if not fou
 const navigate = useNavigate();
 
 // 🎯 MOVE PROMO HERE (before useEffect!)
