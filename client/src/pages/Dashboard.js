@@ -93,7 +93,7 @@ useEffect(() => {
   return () => clearTimeout(timer);
 }, [promo, promoDismissed]);
   // ✅ CDN URL
-  const CDN_BASE_URL = `https://imagesadult.b-cdn.net/${plan}/`;
+  const CDN_BASE_URL = `https://adultplatform-content.b-cdn.net/${plan}/`;
 
   useEffect(() => {
     axios
