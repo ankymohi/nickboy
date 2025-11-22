@@ -1261,7 +1261,7 @@ setPromoDismissed(true); // ONLY hides popup
                 whiteSpace: "nowrap",
               }}
             >
-              hnyclb.online
+              nickyboy.com.br
             </div>
           </div>
         </div>
