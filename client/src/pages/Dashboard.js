@@ -97,7 +97,7 @@ useEffect(() => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/images/${plan}`)
+      .get(`https://nickboy.onrender.com/api/images/${plan}`)
       .then((res) => setImages(res.data))
       .catch((err) => console.error("Error loading images:", err));
   }, [plan]);
