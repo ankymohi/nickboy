@@ -32,7 +32,7 @@ export default function ResetPasswordPage() {
     const url =
       window.location.hostname === "localhost"
         ? "http://localhost:5000/api/auth/reset-password"
-        : "https://hnyclb.online/api/auth/reset-password";
+        : "https://nickboy.onrender.com/api/auth/reset-password";
 
     try {
       const res = await fetch(url, {
