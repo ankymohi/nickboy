@@ -23,6 +23,23 @@ const allowedOrigins = [
   "https://www.nickboy.com.br",
   "http://localhost:3000"
 ];
+
+
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("❌ Blocked by CORS:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 // For JSON + form
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -73,22 +90,8 @@ app.post("/send-form", upload.any(), async (req, res) => {
   }
 });
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log("❌ Blocked by CORS:", origin);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
 
-app.use(express.json());
+
 
 // Routes
 app.use("/api/auth", authRoutes);
