@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import { MercadoPagoConfig, Preference } from "mercadopago";
-
+import nodemailer from "nodemailer";
+import multer from "multer";
+import fs from "fs";
 import authRoutes from "./routes/authRoutes.js";
 import bunnyRoutes from "./routes/bunnyRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
