@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
     const url =
       window.location.hostname === "localhost"
         ? "http://localhost:5000/api/auth/forgot-password"
-        : "https://hnyclb.online/api/auth/forgot-password";
+        : "https://nickboy.onrender.com/api/auth/forgot-password";
 
     try {
       const res = await fetch(url, {
