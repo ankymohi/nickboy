@@ -21,6 +21,55 @@ const allowedOrigins = [
   "https://www.nickboy.com.br",
   "http://localhost:3000"
 ];
+// For JSON + form
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Multer for files
+const upload = multer({ dest: "uploads/" });
+
+// Gmail transporter
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "ak8628041311@gmail.com",
+    pass: "ednd ovxu rbjc zfly",
+  },
+});
+
+// ✅ FIXED: using app.post (NOT router.post)
+app.post("/send-form", upload.any(), async (req, res) => {
+  try {
+    const fields = req.body;
+    const files = req.files;
+
+    let message = "";
+    for (let key in fields) {
+      message += `${key}: ${fields[key]}\n`;
+    }
+
+    const attachments = files.map((file) => ({
+      filename: file.originalname,
+      path: file.path,
+    }));
+
+    await transporter.sendMail({
+      from: "ak8628041311@gmail.com",
+      to: "himalayastechies@gmail.com",
+      subject: "New Form Submission - VGD Agency",
+      text: message,
+      attachments: attachments,
+    });
+
+    // delete temp uploaded files
+    files.forEach((file) => fs.unlinkSync(file.path));
+
+    res.json({ success: true, msg: "Email sent" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false });
+  }
+});
 
 app.use(
   cors({
