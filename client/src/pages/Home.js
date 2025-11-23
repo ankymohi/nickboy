@@ -142,7 +142,7 @@ const plans = [
 
       <button
         className="vgd-btn-signup vgd-model-btn"
-        onClick={() => navigate("/login")}
+        onClick={() => navigate("/FormModal")}
       >
         Quero ser modelo
       </button>
