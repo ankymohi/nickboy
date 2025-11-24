@@ -171,7 +171,12 @@ app.post("/create-preference", async (req, res) => {
     }
 
     console.log("✅ Preference created for user:", userId, "Plan:", plan.name);
-    return res.json({ id: prefId });
+    return res.json({
+  id: prefId,
+  init_point: result.init_point || result.body?.init_point,
+  sandbox_init_point: result.sandbox_init_point || result.body?.sandbox_init_point
+});
+
   } catch (err) {
     console.error("Error creating preference:", err);
     return res.status(500).json({ error: err?.message || "MercadoPago error" });
