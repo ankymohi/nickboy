@@ -63,7 +63,13 @@ console.log("User from localStorage:", localStorage.getItem("user"));
       }
 
       // Redirect user to MercadoPago checkout
-      window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
+      if (data.init_point) {
+  window.location.href = data.init_point;
+} else {
+  alert("Erro: init_point não recebido.");
+  console.log(data);
+}
+
     } catch (err) {
       console.error(err);
       alert("Falha ao conectar ao servidor.");
