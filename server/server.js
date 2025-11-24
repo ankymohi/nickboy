@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import bunnyRoutes from "./routes/bunnyRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import User from "./models/userModel.js"; // ✅ ADD THIS LINE
+import nodemailer from "nodemailer";
 
 
 dotenv.config();
