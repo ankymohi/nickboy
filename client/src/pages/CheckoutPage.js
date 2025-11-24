@@ -135,7 +135,13 @@ useEffect(() => {
         timestamp: Date.now()
       }));
       
-      window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${data.id}`;
+      if (data.init_point) {
+  window.location.href = data.init_point;
+} else {
+  alert("Erro: init_point não recebido.");
+  console.log(data);
+}
+
       return;
     } else {
       console.error("No preference id returned:", data);
