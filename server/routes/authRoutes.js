@@ -138,56 +138,22 @@ router.put("/update-plan", async (req, res) => {
   }
 });
 
-/**
- * 🔹 FORGOT PASSWORD
- */
-router.post("/forgot-password", async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user)
-      return res.status(404).json({ message: "⚠️ Usuário não encontrado" });
-
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    user.resetToken = resetToken;
-    user.resetTokenExpire = Date.now() + 10 * 60 * 1000;
-    await user.save();
-
-    const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
-    const resetLink = `${FRONTEND_URL}/reset-password/${resetToken}`;
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: `"HNYCLB Suporte" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: "Redefinição de Senha",
-      html: `
-        <h2>Olá ${user.name || "Usuário"},</h2>
-        <p>Você solicitou a redefinição da sua senha.</p>
-        <p>Clique no botão abaixo para redefinir sua senha:</p>
-        <a href="${resetLink}" style="
-          background:#ff007f;
-          color:white;
-          padding:10px 20px;
-          border-radius:8px;
-          text-decoration:none;">Redefinir Senha</a>
-        <p>Esse link expira em 10 minutos.</p>
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
-    res.json({ message: "📩 Link de redefinição enviado ao seu e-mail!" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Erro no servidor" });
-  }
+await resend.emails.send({
+  from: "Suporte HNYCLB <onboarding@resend.dev>",
+  to: email,
+  subject: "Redefinição de Senha",
+  html: `
+    <h2>Olá ${user.name || "Usuário"},</h2>
+    <p>Você solicitou a redefinição da sua senha.</p>
+    <p>Clique no botão abaixo para redefinir sua senha:</p>
+    <a href="${resetLink}" style="
+      background:#ff007f;
+      color:white;
+      padding:10px 20px;
+      border-radius:8px;
+      text-decoration:none;">Redefinir Senha</a>
+    <p>Esse link expira em 10 minutos.</p>
+  `,
 });
 
 /**
