@@ -140,22 +140,57 @@ router.put("/update-plan", async (req, res) => {
   }
 });
 
-await resend.emails.send({
-  from: "Suporte HNYCLB <onboarding@resend.dev>",
-  to: email,
-  subject: "Redefinição de Senha",
-  html: `
-    <h2>Olá ${user.name || "Usuário"},</h2>
-    <p>Você solicitou a redefinição da sua senha.</p>
-    <p>Clique no botão abaixo para redefinir sua senha:</p>
-    <a href="${resetLink}" style="
-      background:#ff007f;
-      color:white;
-      padding:10px 20px;
-      border-radius:8px;
-      text-decoration:none;">Redefinir Senha</a>
-    <p>Esse link expira em 10 minutos.</p>
-  `,
+/**
+ * 🔹 FORGOT PASSWORD
+ */
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    // Check user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    // Create reset token
+    const token = crypto.randomBytes(32).toString("hex");
+    const resetLink = `https://www.nickboy.com.br/reset-password?token=${token}`;
+
+    // Save token in DB
+    user.resetToken = token;
+    user.resetTokenExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+    await user.save();
+
+    // Send email using Resend
+    await resend.emails.send({
+      from: "Suporte HNYCLB <onboarding@resend.dev>",
+      to: email,
+      subject: "Redefinição de Senha",
+      html: `
+        <h2>Olá ${user.name || "Usuário"},</h2>
+        <p>Você solicitou a redefinição da sua senha.</p>
+        <p>Clique no botão abaixo para redefinir:</p>
+        <a href="${resetLink}" style="
+          background:#ff007f;
+          color:white;
+          padding:10px 20px;
+          border-radius:8px;
+          text-decoration:none;">Redefinir Senha</a>
+        <p>Esse link expira em 10 minutos.</p>
+      `,
+    });
+
+    res.json({ message: "Email enviado com sucesso!" });
+
+  } catch (err) {
+    console.error("Forgot password error:", err);
+    res.status(500).json({ message: "Erro no servidor" });
+  }
 });
 
 /**
