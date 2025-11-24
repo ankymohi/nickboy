@@ -3,13 +3,14 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import { MercadoPagoConfig, Preference } from "mercadopago";
-import nodemailer from "nodemailer";
 import multer from "multer";
 import fs from "fs";
 import authRoutes from "./routes/authRoutes.js";
 import bunnyRoutes from "./routes/bunnyRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import User from "./models/userModel.js"; // ✅ ADD THIS LINE
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 dotenv.config();
 const app = express();
