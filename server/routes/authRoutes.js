@@ -5,6 +5,8 @@ import User from "../models/userModel.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import dotenv from "dotenv";
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const router = express.Router();
 dotenv.config();
