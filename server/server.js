@@ -10,7 +10,8 @@ import bunnyRoutes from "./routes/bunnyRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import User from "./models/userModel.js"; // ✅ ADD THIS LINE
 import nodemailer from "nodemailer";
-
+import formRoute from "./routes/formRoute.js";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 dotenv.config();
 const app = express();
