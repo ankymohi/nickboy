@@ -62,9 +62,10 @@ export default function FormModal() {
 
     try {
       const response = await fetch("https://nickboy.onrender.com/send-form", {
-        method: "POST",
-        body: sendData,
-      });
+  method: "POST",
+  body: sendData,
+});
+
 
       if (response.ok) {
         alert("Formulário enviado com sucesso!");
