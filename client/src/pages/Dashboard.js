@@ -212,8 +212,7 @@ useEffect(() => {
       <div
         style={{
           minHeight: "100vh",
-          background:
-            "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+         
           color: "white",
           position: "relative",
           overflow: "hidden",
@@ -266,17 +265,20 @@ useEffect(() => {
           {/* Lock Icon */}
           <div
             style={{
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
+             
+              
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: "30px",
+              
+              marginBottom: "20px",
+               background:
+                "linear-gradient(90deg, rgb(153 17 27), rgb(228 193 153), rgb(210 19 37))",
+                 WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
               animation: "bounce 3s ease-in-out infinite",
             }}
           >
-            <img src={logo} alt="VGD Logo" />
+            <h1>Nickboy</h1>
           </div>
 
           {/* Title */}
