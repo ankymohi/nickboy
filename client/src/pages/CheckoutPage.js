@@ -16,45 +16,37 @@ const promoPrices = {
    const plans = [
   {
     name: "Pack 1",
-    price: "1.00",
-    originalPrice: "0",
+    price: promoPrices["Pack 1"].price,
+    originalPrice: promoPrices["Pack 1"].originalPrice,
     duration: "Acesso único",
-    features: [
-      "100 fotos",
-      "Todas as mídias em Full HD",
-    ],
+    features: ["100 fotos", "Todas as mídias em Full HD"],
     popular: false,
     color: "from-blue-500 to-blue-600"
   },
   {
     name: "Pack 2",
-    price: "1",
-    originalPrice: "0",
+    price: promoPrices["Pack 2"].price,
+    originalPrice: promoPrices["Pack 2"].originalPrice,
     duration: "Acesso único",
-    features: [
-      "150 fotos",
-      "25 vídeos",
-      "Todas as mídias em Full HD",
-    ],
+    features: ["150 fotos", "25 vídeos", "Todas as mídias em Full HD"],
     popular: true,
     color: "from-purple-500 to-pink-500"
   },
   {
     name: "Pack 3",
-    price: "300.00",
-    originalPrice: "0",
+    price: promoPrices["Pack 3"].price,
+    originalPrice: promoPrices["Pack 3"].originalPrice,
     duration: "Acesso único + VIP",
     features: [
       "150 fotos",
       "50 vídeos",
       "1 vídeo personalidade",
-      "Todas as mídias em Full HD",
+      "Todas as mídias em Full HD"
     ],
     popular: false,
     color: "from-amber-500 to-orange-500"
   }
 ];
-
 
 useEffect(() => {
   if (window.MercadoPago && process.env.REACT_APP_MP_PUBLIC_KEY) {
