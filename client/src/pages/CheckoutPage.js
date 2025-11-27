@@ -28,7 +28,7 @@ const promoPrices = {
   },
   {
     name: "Pack 2",
-    price: "99.99",
+    price: "1",
     originalPrice: "0",
     duration: "Acesso único",
     features: [
