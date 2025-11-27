@@ -155,7 +155,7 @@ useEffect(() => {
       color: '#fff'
     }}>
       {/* Header */}
-      <div style={{
+      <div  style={{
         background: 'rgba(0, 0, 0, 0.3)',
         backdropFilter: 'blur(10px)',
         borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
@@ -215,7 +215,8 @@ useEffect(() => {
         </div>
 
         {/* Plans Grid */}
-        <div style={{
+        <div className={`plan-card ${plan.popular ? "popular" : ""}`}
+ style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
           gap: '24px',
