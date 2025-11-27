@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Check, ShieldCheck, Loader2, AlertCircle } from "lucide-react";
-
+import "./CheckOut.css";
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const location = useLocation();
