@@ -43,7 +43,7 @@ const promoPrices = {
   {
     name: "Pack 3",
     price: promoPrices["Pack 3"].price,
-    originalPrice: promoPrices["Pack 3"].originalPrice],
+    originalPrice: promoPrices["Pack 3"].originalPrice,
     duration: "Acesso único + VIP",
     features: [
       "150 fotos",
