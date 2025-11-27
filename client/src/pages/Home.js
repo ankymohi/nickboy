@@ -21,39 +21,48 @@ export default function VGDSubscriptionPage() {
 const plans = [
   {
     name: "Pack 1",
-    price: "49.99",
+    price: "19.99",
     originalPrice: "0",
     duration: "Acesso único",
     features: [
-      "100 fotos",
-      "Todas as mídias em Full HD",
+      "+ de 100 fotos de cueca, poses provocantes e corpo definido 😏",
+      "Nada explícito, só o suficiente pra mexer com a imaginação 👀",
+      "🔒 Exclusivas & privadas | 📥 Entrega imediata"
     ],
     popular: false,
     color: "from-blue-500 to-blue-600"
   },
   {
     name: "Pack 2",
-    price: "99.99",
+    price: "59.99",
     originalPrice: "0",
     duration: "Acesso único",
     features: [
-      "150 fotos",
-      "25 vídeos",
       "Todas as mídias em Full HD",
+      "Para quem quer ver tudo mesmo… 😈",
+      "150 fotos + 25 vídeos intensos",
+      "* Totalmente sem censura",
+      "* Vídeos com final feliz 💦",
+      "* Posições e takes bem íntimos 📸🎥",
+      "✔ Acesso privado e imediato"
     ],
     popular: true,
     color: "from-purple-500 to-pink-500"
   },
   {
     name: "Pack 3",
-    price: "300.00",
+    price: "199.99",
     originalPrice: "0",
     duration: "Acesso único + VIP",
     features: [
-      "150 fotos",
-      "50 vídeos",
-      "1 vídeo personalidade",
-      "Todas as mídias em Full HD",
+     "Pack 3 VIP — Domine a cena 😈",
+      "Me diz o que você quer ver…",
+      "Eu gravo um vídeo exclusivo só pra você 👅",
+      "Nada editado, nada repetido.",
+      "E tem mais…",
+      "🎥 50 vídeos explícitos",
+      "🔥 3 vídeos longos (até 10 minutos)",
+      "📸 150 fotos íntimas e exclusivas"
     ],
     popular: false,
     color: "from-amber-500 to-orange-500"
