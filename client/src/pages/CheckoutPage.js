@@ -2,63 +2,65 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Check, ShieldCheck, Loader2, AlertCircle } from "lucide-react";
 import "./CheckOut.css";
+
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-const promoPrices = {
-  "Pack 1": { price: "29.99", originalPrice: "49.99" },
-  "Pack 2": { price: "69.99", originalPrice: "99.99" },
-  "Pack 3": { price: "209.99", originalPrice: "299.99" },
-};
-   const plans = [
-  {
-    name: "Pack 1",
-    price: promoPrices["Pack 1"].price,
-    originalPrice: promoPrices["Pack 1"].originalPrice,
-    duration: "Acesso único",
-    features: ["100 fotos", "Todas as mídias em Full HD"],
-    popular: false,
-    color: "from-blue-500 to-blue-600"
-  },
-  {
-    name: "Pack 2",
-    price: promoPrices["Pack 2"].price,
-    originalPrice: promoPrices["Pack 2"].originalPrice,
-    duration: "Acesso único",
-    features: ["150 fotos", "25 vídeos", "Todas as mídias em Full HD"],
-    popular: true,
-    color: "from-purple-500 to-pink-500"
-  },
-  {
-    name: "Pack 3",
-    price: promoPrices["Pack 3"].price,
-    originalPrice: promoPrices["Pack 3"].originalPrice,
-    duration: "Acesso único + VIP",
-    features: [
-      "150 fotos",
-      "50 vídeos",
-      "1 vídeo personalidade",
-      "Todas as mídias em Full HD"
-    ],
-    popular: false,
-    color: "from-amber-500 to-orange-500"
-  }
-];
 
-useEffect(() => {
-  if (window.MercadoPago && process.env.REACT_APP_MP_PUBLIC_KEY) {
-    const mp = new window.MercadoPago(process.env.REACT_APP_MP_PUBLIC_KEY, {
-      locale: "pt-BR",
-    });
-    console.log("MercadoPago loaded:", mp);
-  } else {
-    console.error("MercadoPago SDK or Public Key missing");
-  }
-}, []);
+  const promoPrices = {
+    "Pack 1": { price: "29.99", originalPrice: "49.99" },
+    "Pack 2": { price: "69.99", originalPrice: "99.99" },
+    "Pack 3": { price: "209.99", originalPrice: "299.99" },
+  };
 
+  const plans = [
+    {
+      name: "Pack 1",
+      price: promoPrices["Pack 1"].price,
+      originalPrice: promoPrices["Pack 1"].originalPrice,
+      duration: "Acesso único",
+      features: ["100 fotos", "Todas as mídias em Full HD"],
+      popular: false,
+      color: "from-blue-500 to-blue-600"
+    },
+    {
+      name: "Pack 2",
+      price: promoPrices["Pack 2"].price,
+      originalPrice: promoPrices["Pack 2"].originalPrice,
+      duration: "Acesso único",
+      features: ["150 fotos", "25 vídeos", "Todas as mídias em Full HD"],
+      popular: true,
+      color: "from-purple-500 to-pink-500"
+    },
+    {
+      name: "Pack 3",
+      price: promoPrices["Pack 3"].price,
+      originalPrice: promoPrices["Pack 3"].originalPrice,
+      duration: "Acesso único + VIP",
+      features: [
+        "150 fotos",
+        "50 vídeos",
+        "1 vídeo personalidade",
+        "Todas as mídias em Full HD"
+      ],
+      popular: false,
+      color: "from-amber-500 to-orange-500"
+    }
+  ];
+
+  useEffect(() => {
+    if (window.MercadoPago && process.env.REACT_APP_MP_PUBLIC_KEY) {
+      const mp = new window.MercadoPago(process.env.REACT_APP_MP_PUBLIC_KEY, {
+        locale: "pt-BR",
+      });
+      console.log("MercadoPago loaded:", mp);
+    } else {
+      console.error("MercadoPago SDK or Public Key missing");
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -77,7 +79,6 @@ useEffect(() => {
     }
   }, [location.state]);
 
-
   const handleSelectPlan = (plan) => {
     if (!user) {
       alert("Por favor, faça login primeiro!");
@@ -89,65 +90,61 @@ useEffect(() => {
   };
 
   const handleConfirmPayment = async (plan = selectedPlan) => {
-  if (!plan) {
-    alert("Selecione um plano primeiro.");
-    return;
-  }
-  if (!user) {
-    alert("Por favor, faça login primeiro!");
-    navigate("/login");
-    return;
-  }
+    if (!plan) {
+      alert("Selecione um plano primeiro.");
+      return;
+    }
+    if (!user) {
+      alert("Por favor, faça login primeiro!");
+      navigate("/login");
+      return;
+    }
 
-  setIsProcessing(true);
-  try {
-    const response = await fetch("https://nickboy.onrender.com/create-preference", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        plan: plan,
-        userId: user.id || user._id  // ✅ ADD THIS - send user ID
-      }),
-    });
+    setIsProcessing(true);
+    try {
+      const response = await fetch("https://nickboy.onrender.com/create-preference", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          plan: plan,
+          userId: user.id || user._id
+        }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      console.error("Create preference failed:", data);
-      alert("Erro ao iniciar o pagamento. Veja console.");
+      if (!response.ok) {
+        console.error("Create preference failed:", data);
+        alert("Erro ao iniciar o pagamento. Veja console.");
+        setIsProcessing(false);
+        return;
+      }
+
+      if (data.id) {
+        localStorage.setItem('pendingPayment', JSON.stringify({
+          planName: plan.name,
+          userId: user.id || user._id,
+          timestamp: Date.now()
+        }));
+        
+        if (data.init_point) {
+          window.location.href = data.init_point;
+        } else {
+          alert("Erro: init_point não recebido.");
+          console.log(data);
+        }
+        return;
+      } else {
+        console.error("No preference id returned:", data);
+        alert("Erro ao iniciar o pagamento. Sem preference id.");
+      }
+    } catch (err) {
+      console.error("Erro ao conectar com o servidor de pagamento:", err);
+      alert("Erro ao conectar com o servidor de pagamento!");
+    } finally {
       setIsProcessing(false);
-      return;
     }
-
-    if (data.id) {
-      // ✅ Store payment info in localStorage for success page
-      localStorage.setItem('pendingPayment', JSON.stringify({
-        planName: plan.name,
-        userId: user.id || user._id,
-        timestamp: Date.now()
-      }));
-      
-      if (data.init_point) {
-  window.location.href = data.init_point;
-} else {
-  alert("Erro: init_point não recebido.");
-  console.log(data);
-}
-
-      return;
-    } else {
-      console.error("No preference id returned:", data);
-      alert("Erro ao iniciar o pagamento. Sem preference id.");
-    }
-  } catch (err) {
-    console.error("Erro ao conectar com o servidor de pagamento:", err);
-    alert("Erro ao conectar com o servidor de pagamento!");
-  } finally {
-    setIsProcessing(false);
-  }
-};
-
-
+  };
 
   return (
     <div style={{
@@ -155,7 +152,7 @@ useEffect(() => {
       color: '#fff'
     }}>
       {/* Header */}
-      <div  style={{
+      <div style={{
         background: 'rgba(0, 0, 0, 0.3)',
         backdropFilter: 'blur(10px)',
         borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
@@ -203,7 +200,7 @@ useEffect(() => {
             fontSize: '3rem',
             fontWeight: 'bold',
             marginBottom: '16px',
-            background: 'linear-gradient(to right, #fff, #c084fc)',
+            background: 'linear-gradient(to right, #d41322, #e2b77a, #e7222f)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
@@ -215,8 +212,7 @@ useEffect(() => {
         </div>
 
         {/* Plans Grid */}
-        <div 
- style={{
+        <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
           gap: '24px',
@@ -231,7 +227,7 @@ useEffect(() => {
                 backdropFilter: 'blur(16px)',
                 borderRadius: '16px',
                 padding: '32px',
-                border: plan.popular ? '2px solid #a855f7' : '1px solid rgba(255, 255, 255, 0.1)',
+                border: plan.popular ? '2px solid #d41322' : '1px solid rgba(255, 255, 255, 0.1)',
                 transform: plan.popular ? 'scale(1.05)' : 'scale(1)',
                 transition: 'transform 0.3s ease',
                 cursor: 'pointer'
@@ -243,12 +239,12 @@ useEffect(() => {
                   top: '-16px',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  background: 'linear-gradient(to right, #a855f7, #ec4899)',
+                  background: 'linear-gradient(to right, #d41322, #e2b77a, #e7222f)',
                   padding: '8px 24px',
                   borderRadius: '9999px',
                   fontSize: '12px',
                   fontWeight: 'bold',
-                  boxShadow: '0 10px 25px rgba(168, 85, 247, 0.5)'
+                  boxShadow: '0 10px 25px rgba(212, 19, 34, 0.5)'
                 }}>
                   ⭐ MAIS POPULAR
                 </div>
@@ -302,7 +298,7 @@ useEffect(() => {
                 disabled={isProcessing}
                 style={{
                   width: '100%',
-                  background: `linear-gradient(to right, ${plan.color.includes('blue') ? '#3b82f6, #2563eb' : plan.color.includes('purple') ? '#a855f7, #ec4899' : '#f59e0b, #f97316'})`,
+                  background: 'linear-gradient(to right, #d41322, #e2b77a, #e7222f)',
                   color: '#fff',
                   padding: '16px',
                   borderRadius: '12px',
@@ -312,7 +308,7 @@ useEffect(() => {
                   cursor: 'pointer',
                   opacity: isProcessing ? 0.5 : 1,
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 15px rgba(168, 85, 247, 0.3)'
+                  boxShadow: '0 4px 15px rgba(212, 19, 34, 0.4)'
                 }}
               >
                 {isProcessing ? "Processando..." : "Assinar Agora"}
