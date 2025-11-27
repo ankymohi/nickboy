@@ -21,7 +21,11 @@ const promoPrices = {
     duration: "Acesso único",
     features: ["100 fotos", "Todas as mídias em Full HD"],
     popular: false,
-    color: "from-blue-500 to-blue-600"
+
+    // 🔥 SAME COLOR AS HOME
+    gradient: "linear-gradient(135deg, #8b0a14, #d41322)",
+    button: "linear-gradient(to right, #d41322, #e7222f)",
+    border: "1px solid rgba(212,19,34,0.6)"
   },
   {
     name: "Pack 2",
@@ -30,12 +34,16 @@ const promoPrices = {
     duration: "Acesso único",
     features: ["150 fotos", "25 vídeos", "Todas as mídias em Full HD"],
     popular: true,
-    color: "from-purple-500 to-pink-500"
+
+    // 💜 SAME PURPLE / PINK AS HOME
+    gradient: "linear-gradient(135deg, #7c3aed, #ec4899)",
+    button: "linear-gradient(to right, #a855f7, #ec4899)",
+    border: "2px solid #a855f7"
   },
   {
     name: "Pack 3",
     price: promoPrices["Pack 3"].price,
-    originalPrice: promoPrices["Pack 3"].originalPrice,
+    originalPrice: promoPrices["Pack 3"].originalPrice],
     duration: "Acesso único + VIP",
     features: [
       "150 fotos",
@@ -44,7 +52,11 @@ const promoPrices = {
       "Todas as mídias em Full HD"
     ],
     popular: false,
-    color: "from-amber-500 to-orange-500"
+
+    // 🟡 SAME GOLD / AMBER AS HOME
+    gradient: "linear-gradient(135deg, #e3a008, #f59e0b)",
+    button: "linear-gradient(to right, #f59e0b, #f97316)",
+    border: "1px solid rgba(243,134,12,0.6)"
   }
 ];
 
@@ -226,11 +238,11 @@ useEffect(() => {
               key={index}
               style={{
                 position: 'relative',
-                background: 'rgba(255, 255, 255, 0.05)',
+                background: plan.gradient,
                 backdropFilter: 'blur(16px)',
                 borderRadius: '16px',
                 padding: '32px',
-                border: plan.popular ? '2px solid #a855f7' : '1px solid rgba(255, 255, 255, 0.1)',
+                border: plan.border,
                 transform: plan.popular ? 'scale(1.05)' : 'scale(1)',
                 transition: 'transform 0.3s ease',
                 cursor: 'pointer'
@@ -301,7 +313,7 @@ useEffect(() => {
                 disabled={isProcessing}
                 style={{
                   width: '100%',
-                  background: `linear-gradient(to right, ${plan.color.includes('blue') ? '#3b82f6, #2563eb' : plan.color.includes('purple') ? '#a855f7, #ec4899' : '#f59e0b, #f97316'})`,
+                  background: plan.button,
                   color: '#fff',
                   padding: '16px',
                   borderRadius: '12px',
@@ -334,7 +346,7 @@ useEffect(() => {
             { icon: AlertCircle, color: '#c084fc', title: 'Suporte 24/7', desc: 'Estamos aqui para ajudar sempre' }
           ].map((item, i) => (
             <div key={i} style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: plan.gradient,
               backdropFilter: 'blur(16px)',
               borderRadius: '12px',
               padding: '24px',
