@@ -1,0 +1,91 @@
+/* Card Background */
+.plan-card {
+  background: linear-gradient(180deg, #121212, #1a1a1a);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  transition: 0.3s ease;
+}
+
+/* Hover Glow */
+.plan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(255, 0, 70, 0.4);
+}
+
+/* Popular Border */
+.plan-card.popular {
+  border: 2px solid #ff0046;
+  box-shadow: 0 0 30px rgba(255, 0, 70, 0.55);
+}
+
+/* Titles */
+.plan-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #ff2a2a, #ffae00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Price */
+.plan-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #ffae00, #ff2a2a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Original Price */
+.plan-original-price {
+  color: #aaaaaa;
+  text-decoration: line-through;
+}
+
+/* Save Badge */
+.plan-save {
+  background: rgba(255, 174, 0, 0.18);
+  padding: 6px 14px;
+  border-radius: 999px;
+  color: #ffae00;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Button Style Red–Gold */
+.plan-button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  font-size: 17px;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(to right, #ff2a2a, #ff8900);
+  box-shadow: 0 4px 20px rgba(255, 0, 70, 0.4);
+  transition: 0.3s ease;
+}
+
+/* Button Hover */
+.plan-button:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+}
+
+/* Popular Badge */
+.popular-badge {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, #ff2a2a, #ffae00);
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(255, 0, 70, 0.55);
+}
