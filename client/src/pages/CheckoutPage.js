@@ -215,7 +215,7 @@ useEffect(() => {
         </div>
 
         {/* Plans Grid */}
-        <div className={`plan-card ${plan.popular ? "popular" : ""}`}
+        <div 
  style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
