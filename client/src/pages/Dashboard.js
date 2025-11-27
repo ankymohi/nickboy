@@ -49,15 +49,15 @@ const isPack2 = planName.includes("2");
 const promo = isPack1
   ? {
       title: "Oferta Especial!",
-      text: "Atualize para o Pack 2 com 30% de desconto!",
-      price: "1",
+      text: "Você ganhou 35% de desconto no Pack 2! De R$ 59,99 por apenas R$ 39,99 😈",
+      price: "39,99",
       button: "Atualizar agora",
       action: () =>
   navigate("/promo-checkout", {
     state: {
       plan: "Pack 2",
-      promoPrice: "1",
-      originalPrice: "99.99"
+      promoPrice: "39,99",
+      originalPrice: "59.99"
     }
   })
 
@@ -65,15 +65,19 @@ const promo = isPack1
   : isPack2
   ? {
       title: "Oferta Exclusiva!",
-      text: "Atualize para o Pack 3 com 30% de desconto!",
-      price: "209.99",
+      text: "🔥 Você desbloqueou um benefício VIP!
+35% de desconto no Pack 3 😈
+De R$ 199,99 por apenas R$ 139,99
+Conteúdo longo, explícito e um vídeo personalizado só pra você…
+Agora você manda de verdade",
+      price: "139.99",
       button: "Ir para Pack 3",
       action: () =>
   navigate("/promo-checkout", {
     state: {
       plan: "Pack 3",
-      promoPrice: "209.99",
-      originalPrice: "299.99"
+      promoPrice: "139.99",
+      originalPrice: "199.99"
     }
   })
 
