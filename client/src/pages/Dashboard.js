@@ -340,7 +340,7 @@ useEffect(() => {
             }}
           >
             <TrendingUp size={16} style={{ color: "#ec4899" }} />
-            <span>Junte-se a mais de 10.000 assinantes premium</span>
+            
           </div>
 
         
