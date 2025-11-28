@@ -1069,7 +1069,7 @@ setPromoDismissed(true); // ONLY hides popup
                           }
                         />
                       </button>
-                      <button className="list-action-button">
+                      <button className="list-action-button" onClick={() => setSelectedImage(item.thumbnail)}>
                         {item.type === "video" ? "Assistir" : "Ver"}
                       </button>
                     </div>
