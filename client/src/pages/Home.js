@@ -94,7 +94,22 @@ const plans = [
     price: "99.99",
     originalPrice: "0",
     duration: "Acesso único",
-      features: [
+       features: ["Todas as mídias em Full HD",
+      "Para quem quer ver tudo mesmo… 😈",
+      "150 fotos + 25 vídeos intensos",
+      "* Totalmente sem censura",
+      "* Vídeos com final feliz 💦",
+      "* Posições e takes bem íntimos 📸🎥",
+      "✔ Acesso privado e imediato"],
+    popular: true,
+    color: "from-purple-500 to-pink-500"
+  },
+  {
+    name: "Pack 3",
+    price: "300.00",
+    originalPrice: "0",
+    duration: "Acesso único + VIP",
+     features: [
         "Pack 3 VIP — Domine a cena 😈",
       "Me diz o que você quer ver…",
       "Eu gravo um vídeo exclusivo só pra você 👅",
@@ -104,20 +119,6 @@ const plans = [
       "🔥 3 vídeos longos (até 10 minutos)",
       "📸 150 fotos íntimas e exclusivas"
       ],
-    popular: true,
-    color: "from-purple-500 to-pink-500"
-  },
-  {
-    name: "Pack 3",
-    price: "300.00",
-    originalPrice: "0",
-    duration: "Acesso único + VIP",
-    features: [
-      "150 fotos",
-      "50 vídeos",
-      "1 vídeo personalidade",
-      "Todas as mídias em Full HD",
-    ],
     popular: false,
     color: "from-amber-500 to-orange-500"
   }
