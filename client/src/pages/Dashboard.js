@@ -1218,8 +1218,8 @@ setPromoDismissed(true); // ONLY hides popup
               onContextMenu={(e) => e.preventDefault()}
               onDragStart={(e) => e.preventDefault()}
               style={{
-                maxWidth: "100%",
-                maxHeight: "100%",
+                 maxHeight: "calc(100vh - 160px)",
+               maxWidth: "90vw",
                 width: "auto",
                 height: "auto",
                 objectFit: "contain",
