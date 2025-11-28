@@ -83,11 +83,9 @@ const plans = [
     price: "49.99",
     originalPrice: "0",
     duration: "Acesso único",
-    features: [
-      "+ de 100 fotos de cueca, poses provocantes e corpo definido 😏",
+  features: ["+ de 100 fotos de cueca, poses provocantes e corpo definido 😏",
       "Nada explícito, só o suficiente pra mexer com a imaginação 👀",
-      "🔒 Exclusivas & privadas | 📥 Entrega imediata"
-    ],
+      "🔒 Exclusivas & privadas | 📥 Entrega imediata"],
     popular: false,
     color: "from-blue-500 to-blue-600"
   },
@@ -96,11 +94,16 @@ const plans = [
     price: "99.99",
     originalPrice: "0",
     duration: "Acesso único",
-    features: [
-      "150 fotos",
-      "25 vídeos",
-      "Todas as mídias em Full HD",
-    ],
+      features: [
+        "Pack 3 VIP — Domine a cena 😈",
+      "Me diz o que você quer ver…",
+      "Eu gravo um vídeo exclusivo só pra você 👅",
+      "Nada editado, nada repetido.",
+      "E tem mais…",
+      "🎥 50 vídeos explícitos",
+      "🔥 3 vídeos longos (até 10 minutos)",
+      "📸 150 fotos íntimas e exclusivas"
+      ],
     popular: true,
     color: "from-purple-500 to-pink-500"
   },
