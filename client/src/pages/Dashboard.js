@@ -38,6 +38,27 @@ export default function SubscriberDashboard() {
   // ✅ Get user first
   const user = JSON.parse(localStorage.getItem("user"));
   const plan = user?.plan?.toLowerCase() || "basic"; // fallback to 'basic' if not fou
+  useEffect(() => {
+  // Block print-screen keys
+  document.addEventListener("keyup", function (e) {
+    if (e.key === "PrintScreen") {
+      navigator.clipboard.writeText("");
+      alert("Screenshots are blocked.");
+    }
+  });
+
+  // Blur page when screenshot apps try to capture
+  let interval = setInterval(() => {
+    if (window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160) {
+      document.body.classList.add("screenshot-block");
+    } else {
+      document.body.classList.remove("screenshot-block");
+    }
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, []);
+
 const navigate = useNavigate();
 
 // 🎯 MOVE PROMO HERE (before useEffect!)
@@ -407,7 +428,15 @@ useEffect(() => {
   }
 
   return (
-    <div className="dashboard-container">
+  <div
+    className="dashboard-container"
+    onContextMenu={(e) => e.preventDefault()}
+    onDragStart={(e) => e.preventDefault()}
+    style={{
+      WebkitUserSelect: "none",
+      userSelect: "none",
+    }}
+  >
       {/* Header */}
       <header className="dashboard-header">
         <div className="dashboard-header-content">
