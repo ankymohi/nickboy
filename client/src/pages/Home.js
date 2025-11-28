@@ -80,7 +80,7 @@ export default function VGDSubscriptionPage() {
 const plans = [
   {
     name: "Pack 1",
-    price: "49.99",
+    price: "19.99",
     originalPrice: "0",
     duration: "Acesso único",
   features: ["+ de 100 fotos de cueca, poses provocantes e corpo definido 😏",
@@ -91,7 +91,7 @@ const plans = [
   },
   {
     name: "Pack 2",
-    price: "99.99",
+    price: "59.99",
     originalPrice: "0",
     duration: "Acesso único",
        features: ["Todas as mídias em Full HD",
@@ -106,7 +106,7 @@ const plans = [
   },
   {
     name: "Pack 3",
-    price: "300.00",
+    price: "199.99",
     originalPrice: "0",
     duration: "Acesso único + VIP",
      features: [
