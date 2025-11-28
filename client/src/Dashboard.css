@@ -85,12 +85,7 @@
   pointer-events: auto;
 }
 
-/* Blur screen when screenshot is attempted (Chrome, Android, iOS) */
-@media (pointer: coarse) {
-  body.screenshot-block * {
-    filter: blur(35px) !important;
-  }
-}
+
 /* Disable screenshot on many devices */
 .dashboard-container {
   -webkit-touch-callout: none !important;
