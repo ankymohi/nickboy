@@ -1299,7 +1299,7 @@ setPromoDismissed(true); // ONLY hides popup
       )}
         {/* WhatsApp Floating Button */}
 <a
-  href="https://wa.me/5511987058492"
+  href="https://wa.me/5511981447980"
   target="_blank"
   rel="noopener noreferrer"
   style={{
