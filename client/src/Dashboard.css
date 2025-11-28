@@ -103,11 +103,7 @@
 }
 
 /* Blur screen when screenshot is attempted (Chrome, Android, iOS) */
-@media (pointer: coarse) {
-  body.screenshot-block * {
-    filter: blur(35px) !important;
-  }
-}
+
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
