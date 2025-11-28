@@ -74,6 +74,40 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* Disable screenshot on many devices */
+.dashboard-container {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  pointer-events: auto;
+}
+
+/* Blur screen when screenshot is attempted (Chrome, Android, iOS) */
+@media (pointer: coarse) {
+  body.screenshot-block * {
+    filter: blur(35px) !important;
+  }
+}
+/* Disable screenshot on many devices */
+.dashboard-container {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  pointer-events: auto;
+}
+
+/* Blur screen when screenshot is attempted (Chrome, Android, iOS) */
+@media (pointer: coarse) {
+  body.screenshot-block * {
+    filter: blur(35px) !important;
+  }
+}
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
