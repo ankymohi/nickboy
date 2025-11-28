@@ -3,7 +3,7 @@ import { Check, Shield, Star, Crown, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./VGD.css";
 import logo from "../assets/logo.png";
-
+import FormModal from "./FormModal";
 // Import local gallery images
 import img1 from "../assets/photo1.jpg";
 import img2 from "../assets/photo2.jpg";
@@ -17,11 +17,70 @@ export default function VGDSubscriptionPage() {
   const [showLoginToast, setShowLoginToast] = useState(false);
   const navigate = useNavigate();
 
+  // Disable right-click, screenshot shortcuts, and image dragging
+  React.useEffect(() => {
+    // Disable right-click
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // Disable screenshot shortcuts and other key combinations
+    const handleKeyDown = (e) => {
+      // Prevent PrintScreen, Cmd+Shift+3/4/5 (Mac), Windows+Shift+S, etc.
+      if (
+        e.key === 'PrintScreen' ||
+        (e.metaKey && e.shiftKey && ['3', '4', '5'].includes(e.key)) ||
+        (e.key === 's' && (e.metaKey || e.ctrlKey) && e.shiftKey)
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    // Disable drag on all images
+    const handleDragStart = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
+
+    // Add CSS to prevent selection and dragging
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .vgd-page-container * {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+      }
+      .vgd-gallery-item img {
+        pointer-events: none;
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('dragstart', handleDragStart);
+      document.head.removeChild(style);
+    };
+  }, []);
+
   
 const plans = [
   {
     name: "Pack 1",
-    price: "19.99",
+    price: "49.99",
     originalPrice: "0",
     duration: "Acesso único",
     features: [
@@ -34,35 +93,27 @@ const plans = [
   },
   {
     name: "Pack 2",
-    price: "59.99",
+    price: "99.99",
     originalPrice: "0",
     duration: "Acesso único",
     features: [
+      "150 fotos",
+      "25 vídeos",
       "Todas as mídias em Full HD",
-      "Para quem quer ver tudo mesmo… 😈",
-      "150 fotos + 25 vídeos intensos",
-      "* Totalmente sem censura",
-      "* Vídeos com final feliz 💦",
-      "* Posições e takes bem íntimos 📸🎥",
-      "✔ Acesso privado e imediato"
     ],
     popular: true,
     color: "from-purple-500 to-pink-500"
   },
   {
     name: "Pack 3",
-    price: "199.99",
+    price: "300.00",
     originalPrice: "0",
     duration: "Acesso único + VIP",
     features: [
-     "Pack 3 VIP — Domine a cena 😈",
-      "Me diz o que você quer ver…",
-      "Eu gravo um vídeo exclusivo só pra você 👅",
-      "Nada editado, nada repetido.",
-      "E tem mais…",
-      "🎥 50 vídeos explícitos",
-      "🔥 3 vídeos longos (até 10 minutos)",
-      "📸 150 fotos íntimas e exclusivas"
+      "150 fotos",
+      "50 vídeos",
+      "1 vídeo personalidade",
+      "Todas as mídias em Full HD",
     ],
     popular: false,
     color: "from-amber-500 to-orange-500"
@@ -201,7 +252,7 @@ const plans = [
       Nickboy — seu corre 
       <span class="vgd-hero-18-badgeName">+18 </span>
     </h1>
-    <button className="vgd-hero-btn" onClick={() => navigate("/login")}>Assine agora</button>
+    <button className="vgd-hero-btn">Assine agora</button>
   </div>
 </section>
 
