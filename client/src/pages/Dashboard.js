@@ -87,7 +87,7 @@ const promo = isPack1
   ? {
       title: "Oferta Exclusiva!",
       text: "🔥 Você desbloqueou um benefício VIP! 35% de desconto no Pack 3 😈 De R$ 199,99 por apenas R$ 139,99 Conteúdo longo, explícito e um vídeo personalizado só pra você… Agora você manda de verdade",
-      price: "2",
+      price: "1",
       button: "Ir para Pack 3",
       action: () =>
   navigate("/promo-checkout", {
