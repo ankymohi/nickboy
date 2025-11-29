@@ -57,17 +57,16 @@ const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 
 
-// Form submission route
 app.post("/send-form", upload.any(), async (req, res) => {
+  console.log("Body:", req.body);
+  console.log("Files:", req.files);
   try {
-    const form = req.body;
-    const files = req.files;
-
-    // Convert form data to plain text
-    let messageText = "New Form Submission:\n\n";
-    Object.keys(form).forEach(key => {
-      messageText += `${key}: ${form[key]}\n`;
-    });
+    // ... Brevo email code
+  } catch (error) {
+    console.error("Error sending form:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
     // Convert uploaded files to attachments
     const attachments = files?.map(file => ({
