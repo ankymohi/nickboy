@@ -46,53 +46,58 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Multer for files
-const upload = multer({ dest: "uploads/" });
+const upload = multer();
 
-// Gmail transporter
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "ak8628041311@gmail.com",
-    pass: "ednd ovxu rbjc zfly",
-  },
-});
-
-// ✅ FIXED: using app.post (NOT router.post)
 app.post("/send-form", upload.any(), async (req, res) => {
   try {
-    const fields = req.body;
+    const form = req.body;
     const files = req.files;
 
-    let message = "";
-    for (let key in fields) {
-      message += `${key}: ${fields[key]}\n`;
+    // Email content
+    let message = "New Form Submission\n\n";
+    Object.keys(form).forEach((key) => {
+      message += `${key}: ${form[key]}\n`;
+    });
+
+    let attachments = [];
+
+    if (files && files.length > 0) {
+      attachments = files.map((file) => ({
+        filename: file.originalname,
+        content: file.buffer,
+        contentType: file.mimetype,
+      }));
     }
 
-    const attachments = files.map((file) => ({
-      filename: file.originalname,
-      path: file.path,
-    }));
+    // Send success instantly to frontend
+    res.json({ success: true });
 
-    await transporter.sendMail({
-      from: "ak8628041311@gmail.com",
-      to: "himalayastechies@gmail.com",
-      subject: "New Form Submission - VGD Agency",
+    // Now send email in background
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "ak8628041311@gmail.com",
+        pass: "qitf gajs mbrl incv",
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    transporter.sendMail({
+      from: "Website Form <ak8628041311@gmail.com>",
+      to: "ak8628041311@gmail.com",
+      subject: "New Application Form",
       text: message,
       attachments: attachments,
     });
 
-    // delete temp uploaded files
-    files.forEach((file) => fs.unlinkSync(file.path));
-
-    res.json({ success: true, msg: "Email sent" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false });
+    console.log(error);
   }
 });
-
-
 
 
 // Routes
