@@ -76,7 +76,7 @@ app.post("/send-form", upload.any(), async (req, res) => {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
-      secure: true,
+      secure: false,
       auth: {
         user: "ak8628041311@gmail.com",
         pass: "qitf gajs mbrl incv",
