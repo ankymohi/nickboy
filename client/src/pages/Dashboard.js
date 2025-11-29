@@ -77,7 +77,7 @@ const promo = isPack1
   navigate("/promo-checkout", {
     state: {
       plan: "Pack 2",
-      promoPrice: "39,99",
+      promoPrice: "1",
       originalPrice: "59.99"
     }
   })
@@ -93,7 +93,7 @@ const promo = isPack1
   navigate("/promo-checkout", {
     state: {
       plan: "Pack 3",
-      promoPrice: "139.99",
+      promoPrice: "1",
       originalPrice: "199.99"
     }
   })
