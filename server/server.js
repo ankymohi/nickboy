@@ -80,10 +80,8 @@ app.post("/send-form", upload.any(), async (req, res) => {
       auth: {
         user: "ak8628041311@gmail.com",
         pass: "qitf gajs mbrl incv",
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
+      }
+      
     });
 
     transporter.sendMail({
