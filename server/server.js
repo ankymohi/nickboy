@@ -60,13 +60,16 @@ const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 app.post("/send-form", upload.any(), async (req, res) => {
   console.log("Body:", req.body);
   console.log("Files:", req.files);
+
   try {
-    // ... Brevo email code
-  } catch (error) {
-    console.error("Error sending form:", error);
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
+    const form = req.body;
+    const files = req.files;
+
+    // Convert form data to plain text
+    let messageText = "New Form Submission:\n\n";
+    Object.keys(form).forEach(key => {
+      messageText += `${key}: ${form[key]}\n`;
+    });
 
     // Convert uploaded files to attachments
     const attachments = files?.map(file => ({
@@ -74,7 +77,7 @@ app.post("/send-form", upload.any(), async (req, res) => {
       content: file.buffer.toString("base64"),
     })) || [];
 
-    // Send email
+    // Send email via Brevo
     const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail({
       to: [{ email: "ak8628041311@gmail.com", name: "VGD Agency" }],
       sender: { email: "noreply@yourdomain.com", name: "Website Form" },
@@ -87,11 +90,10 @@ app.post("/send-form", upload.any(), async (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
-    console.error("Error sending form:", error);
+    console.error("Error sending form:", error.response?.body || error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
-
 
 // Routes
 app.use("/api/auth", authRoutes);
