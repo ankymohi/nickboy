@@ -11,7 +11,6 @@ import adminRoutes from "./routes/adminRoutes.js";
 import User from "./models/userModel.js"; // ✅ ADD THIS LINE
 import nodemailer from "nodemailer";
 import formRoute from "./routes/formRoute.js";
-import SibApiV3Sdk from "sib-api-v3-sdk";
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 dotenv.config();
@@ -49,18 +48,24 @@ app.use(express.urlencoded({ extended: true }));
 
 const upload = multer();
 
-// Initialize Brevo client
-const client = SibApiV3Sdk.ApiClient.instance;
-client.authentications['api-key'].apiKey = process.env.BREVO_API_KEY; // store key in .env
+// Brevo SMTP transporter
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false, // TLS handled automatically
+  auth: {
+    user: "9ce5a7001@smtp-brevo.com", // your Brevo SMTP login
+    pass: "**********7BYtxf",          // your SMTP key
+  },
+});
 
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-
+// /send-form route
 app.post("/send-form", upload.any(), async (req, res) => {
   try {
     const form = req.body;
     const files = req.files;
 
-    // Convert form data to email text
+    // Convert form data to text
     let messageText = "New Form Submission:\n\n";
     Object.keys(form).forEach((key) => {
       messageText += `${key}: ${form[key]}\n`;
@@ -70,30 +75,30 @@ app.post("/send-form", upload.any(), async (req, res) => {
     let attachments = [];
     if (files && files.length > 0) {
       attachments = files.map((file) => ({
-        name: file.originalname,
-        content: file.buffer.toString("base64"), // important: base64
+        filename: file.originalname,
+        content: file.buffer,
+        contentType: file.mimetype,
       }));
     }
 
-    // Send email via Brevo
-    const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail({
-      to: [{ email: "ak8628041311@gmail.com", name: "VGD Agency" }],
-      sender: { email: "ak8628041311@gmail.com", name: "Website Form" },
+    // Respond instantly to frontend
+    res.json({ success: true });
+
+    // Send email in background
+    await transporter.sendMail({
+      from: "Website Form <9ce5a7001@smtp-brevo.com>",
+      to: "ak8628041311@gmail.com",
       subject: "New Application Form",
-      textContent: messageText,
+      text: messageText,
       attachments: attachments,
     });
 
-    // Send email
-    await apiInstance.sendTransacEmail(sendSmtpEmail);
-
-    // Respond instantly
-    res.json({ success: true });
+    console.log("Form submitted and email sent successfully.");
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false });
+    console.error("Error sending form:", error);
   }
 });
+
 
 // Routes
 app.use("/api/auth", authRoutes);
