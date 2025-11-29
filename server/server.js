@@ -50,11 +50,10 @@ app.use(express.urlencoded({ extended: true }));
 
 const upload = multer();
 
-// Brevo API setup
 const abc = SibApiV3Sdk.ApiClient.instance;
 abc.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 
 
@@ -76,13 +75,12 @@ app.post("/send-form", upload.any(), async (req, res) => {
     })) || [];
 
     // Prepare email
-    const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail({
-      to: [{ email: "himalayastechies@gmail.com", name: "VGD Agency" }],
-      sender: { email: "himalayastechies@gmail.com", name: "Website Form" },
-      subject: "New Application Form",
-      textContent: messageText,
-      attachments: attachments,
-    });
+   const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail({
+  to: [{ email: "ak8628041311@gmail.com", name: "VGD Agency" }],
+  sender: { email: "himalayastechies@gmail.com", name: "VGD Website" },
+  subject: "New Application Form",
+  htmlContent: "<h2>Hello</h2><p>This is sent via API</p>",
+});
 
     // Send email via Brevo API
     await apiInstance.sendTransacEmail(sendSmtpEmail);
