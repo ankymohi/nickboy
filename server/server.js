@@ -78,7 +78,7 @@ app.post("/send-form", upload.any(), async (req, res) => {
     // Prepare email
     const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail({
       to: [{ email: "himalayastechies@gmail.com", name: "VGD Agency" }],
-      sender: { email: "noreply@yourdomain.com", name: "Website Form" },
+      sender: { email: "himalayastechies@gmail.com", name: "Website Form" },
       subject: "New Application Form",
       textContent: messageText,
       attachments: attachments,
