@@ -57,27 +57,25 @@ const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 
 
-app.post("/send-form", upload.any(), async (req, res) => {
-  console.log("Body:", req.body);
-  console.log("Files:", req.files);
 
+app.post("/send-form", upload.any(), async (req, res) => {
   try {
     const form = req.body;
     const files = req.files;
 
-    // Convert form data to plain text
+    // Build plain text message from form
     let messageText = "New Form Submission:\n\n";
     Object.keys(form).forEach(key => {
       messageText += `${key}: ${form[key]}\n`;
     });
 
-    // Convert uploaded files to attachments
+    // Convert files to attachments
     const attachments = files?.map(file => ({
       name: file.originalname,
       content: file.buffer.toString("base64"),
     })) || [];
 
-    // Send email via Brevo
+    // Prepare email
     const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail({
       to: [{ email: "ak8628041311@gmail.com", name: "VGD Agency" }],
       sender: { email: "noreply@yourdomain.com", name: "Website Form" },
@@ -86,6 +84,7 @@ app.post("/send-form", upload.any(), async (req, res) => {
       attachments: attachments,
     });
 
+    // Send email via Brevo API
     await apiInstance.sendTransacEmail(sendSmtpEmail);
 
     res.json({ success: true });
@@ -94,7 +93,6 @@ app.post("/send-form", upload.any(), async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
-
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/images", bunnyRoutes);
