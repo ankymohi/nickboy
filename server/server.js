@@ -55,7 +55,7 @@ const transporter = nodemailer.createTransport({
   secure: false, // TLS handled automatically
   auth: {
     user: "9ce5a7001@smtp-brevo.com", // your Brevo SMTP login
-    pass: "xsmtpsib-7e3ae4cd6f724d876acfb2ed7286b42b0138daca7356d69592eb7a843f9ccd60-yW9B8ZPvkn7BYtxf",          // your SMTP key
+    pass: process.env.BREVO_API_KEY,          // your SMTP key
   },
 });
 
