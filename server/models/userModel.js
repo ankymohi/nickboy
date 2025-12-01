@@ -9,11 +9,12 @@ const userSchema = new mongoose.Schema(
     role: { type: String, enum: ["user", "admin"], default: "user" },
 
     // PAYMENT + SUBSCRIPTION DATA
-    plan: {
-      type: String,
-      enum: ["free", "basic", "premium", "vip"],
-      default: "free"
-    },
+  plan: {
+  type: String,
+  enum: ["free", "basic", "premium", "vip", "Pack 1", "Pack 2", "Pack 3"],
+  default: "free"
+},
+
 
     subscriptionStatus: {
       type: String,
