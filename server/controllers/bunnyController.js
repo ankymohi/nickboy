@@ -17,10 +17,16 @@ export const getImagesByPlan = async (req, res) => {
     });
 
     // Bunny returns a list of files
-    const files = response.data.map((file) => ({
-      name: file.ObjectName,
-      url: `${BUNNY_BASE_URL}/${plan}/${file.ObjectName}`,
-    }));
+   const files = response.data.map((file) => {
+  const isVideo = file.ObjectName.endsWith(".mp4") || file.ObjectName.endsWith(".mov") || file.ObjectName.endsWith(".webm");
+
+  return {
+    name: file.ObjectName,
+    type: isVideo ? "video" : "photo",
+    url: `${BUNNY_BASE_URL}/${plan}/${file.ObjectName}`,
+  };
+});
+
 
     res.json(files);
   } catch (error) {
