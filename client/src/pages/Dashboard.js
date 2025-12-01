@@ -1338,7 +1338,11 @@ setPromoDismissed(true); // ONLY hides popup
 </a>
 {selectedVideo && (
   <div
-    onClick={() => setSelectedVideo(null)}
+    onClick={(e) => {
+      if (e.target === e.currentTarget) {
+        setSelectedVideo(null);
+      }
+    }}
     style={{
       position: "fixed",
       top: 0,
@@ -1350,41 +1354,64 @@ setPromoDismissed(true); // ONLY hides popup
       justifyContent: "center",
       alignItems: "center",
       zIndex: 1000000,
+      padding: "20px",
     }}
   >
     <video
       src={selectedVideo}
       controls
       autoPlay
+      playsInline
+      controlsList="nodownload"
+      onContextMenu={(e) => e.preventDefault()}
       style={{
         maxWidth: "90%",
         maxHeight: "90%",
+        width: "auto",
+        height: "auto",
         borderRadius: "8px",
+        outline: "none",
       }}
       onClick={(e) => e.stopPropagation()}
-    />
+    >
+      Seu navegador não suporta a reprodução de vídeo.
+    </video>
 
     <button
-      onClick={() => setSelectedVideo(null)}
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelectedVideo(null);
+      }}
       style={{
         position: "absolute",
         top: "1rem",
         right: "1rem",
-        fontSize: "24px",
+        width: "48px",
+        height: "48px",
+        backgroundColor: "#dc2626",
         color: "white",
-        background: "transparent",
-        border: "none",
+        fontSize: "24px",
+        fontWeight: "bold",
+        border: "2px solid white",
+        borderRadius: "50%",
         cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
+        zIndex: 1000001,
       }}
+      onMouseEnter={(e) =>
+        (e.currentTarget.style.backgroundColor = "#b91c1c")
+      }
+      onMouseLeave={(e) =>
+        (e.currentTarget.style.backgroundColor = "#dc2626")
+      }
     >
       ✕
     </button>
   </div>
 )}
-
-  </div>
-)}
-
     </div>
   );
 }
