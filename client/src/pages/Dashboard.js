@@ -192,6 +192,7 @@ useEffect(() => {
   id: Math.random(),
   type: file.type, // video or photo
   title: file.name,
+    date: new Date().toISOString(),
   thumbnail: file.url,
   url: file.url,
 }));
