@@ -11,7 +11,9 @@ import adminRoutes from "./routes/adminRoutes.js";
 import User from "./models/userModel.js"; // ✅ ADD THIS LINE
 import nodemailer from "nodemailer";
 import formRoute from "./routes/formRoute.js";
-import * as SibApiV3Sdk from "sib-api-v3-sdk";
+import pkg from "sib-api-v3-sdk";
+const SibApiV3Sdk = pkg;
+
 
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
