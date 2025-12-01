@@ -1338,7 +1338,6 @@ setPromoDismissed(true); // ONLY hides popup
 </a>
 {selectedVideo && (
   <div
-    className="modal-overlay"
     onClick={() => setSelectedVideo(null)}
     style={{
       position: "fixed",
@@ -1346,11 +1345,11 @@ setPromoDismissed(true); // ONLY hides popup
       left: 0,
       width: "100vw",
       height: "100vh",
-      background: "rgba(0,0,0,0.7)",
-      zIndex: 2000,
+      backgroundColor: "rgba(0,0,0,0.95)",
       display: "flex",
-      alignItems: "center",
       justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000000,
     }}
   >
     <video
@@ -1360,10 +1359,29 @@ setPromoDismissed(true); // ONLY hides popup
       style={{
         maxWidth: "90%",
         maxHeight: "90%",
-        borderRadius: "12px",
+        borderRadius: "8px",
       }}
       onClick={(e) => e.stopPropagation()}
-    ></video>
+    />
+
+    <button
+      onClick={() => setSelectedVideo(null)}
+      style={{
+        position: "absolute",
+        top: "1rem",
+        right: "1rem",
+        fontSize: "24px",
+        color: "white",
+        background: "transparent",
+        border: "none",
+        cursor: "pointer",
+      }}
+    >
+      ✕
+    </button>
+  </div>
+)}
+
   </div>
 )}
 
