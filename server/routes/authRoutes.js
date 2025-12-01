@@ -7,10 +7,16 @@ import crypto from "crypto";
 import dotenv from "dotenv";
 import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
+import pkg from "sib-api-v3-sdk";
 
 const router = express.Router();
 dotenv.config();
+const SibApiV3Sdk = pkg;
 
+// Brevo Email Settings
+const client = SibApiV3Sdk.ApiClient.instance;
+client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 /**
  * 🔹 SIGNUP (supports admin creation)
  */
@@ -140,86 +146,94 @@ router.put("/update-plan", async (req, res) => {
   }
 });
 
-/**
- * 🔹 FORGOT PASSWORD
- */
+
+/* ---------------------------------------------
+  📌 1️⃣ REQUEST RESET PASSWORD LINK
+----------------------------------------------*/
 router.post("/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
 
-    if (!email) {
-      return res.status(400).json({ message: "Email is required" });
-    }
-
-    // Check user exists
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "Usuário não encontrado" });
-    }
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     // Create reset token
-    const token = crypto.randomBytes(32).toString("hex");
-    const resetLink = `https://www.nickboy.com.br/reset-password?token=${token}`;
+    const resetToken = crypto.randomBytes(32).toString("hex");
 
-    // Save token in DB
-    user.resetToken = token;
-    user.resetTokenExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+    // Save token hashed in DB
+    user.resetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+    user.resetTokenExpire = Date.now() + 10 * 60 * 1000; // 10 min
+
     await user.save();
 
-    // Send email using Resend
-    await resend.emails.send({
-      from: "Suporte HNYCLB <onboarding@resend.dev>",
-      to: email,
-      subject: "Redefinição de Senha",
-      html: `
-        <h2>Olá ${user.name || "Usuário"},</h2>
-        <p>Você solicitou a redefinição da sua senha.</p>
-        <p>Clique no botão abaixo para redefinir:</p>
-        <a href="${resetLink}" style="
-          background:#ff007f;
-          color:white;
-          padding:10px 20px;
-          border-radius:8px;
-          text-decoration:none;">Redefinir Senha</a>
-        <p>Esse link expira em 10 minutos.</p>
+    // URL to send
+    const resetURL = `https://www.nickboy.com.br/reset-password/${resetToken}`;
+
+    // EMAIL CONTENT
+    const emailData = new SibApiV3Sdk.SendSmtpEmail({
+      sender: { email: "himalayastechies@gmail.com", name: "VGD Website" },
+      to: [{ email: user.email, name: user.name }],
+      subject: "Password Reset Request",
+      htmlContent: `
+        <h2>Hello ${user.name}</h2>
+        <p>You requested a password reset.</p>
+        <p>Click the link below to reset your password:</p>
+        <a href="${resetURL}" style="color:blue;">Reset Password</a>
+        <br><br>
+        <p>This link is valid for 10 minutes.</p>
       `,
     });
 
-    res.json({ message: "Email enviado com sucesso!" });
+    await emailApi.sendTransacEmail(emailData);
+
+    res.json({ success: true, message: "Reset link sent to email." });
 
   } catch (err) {
-    console.error("Forgot password error:", err);
-    res.status(500).json({ message: "Erro no servidor" });
+    console.error("Forgot Password Error:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-/**
- * 🔹 RESET PASSWORD
- */
-router.post("/reset-password", async (req, res) => {
+
+/* ---------------------------------------------
+  📌 2️⃣ RESET PASSWORD
+----------------------------------------------*/
+router.post("/reset-password/:token", async (req, res) => {
   try {
-    const { token, password } = req.body;
+    const resetToken = req.params.token;
+
+    // Hash token because DB stores hashed
+    const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
 
     const user = await User.findOne({
-      resetToken: token,
-      resetTokenExpire: { $gt: Date.now() },
+      resetToken: hashedToken,
+      resetTokenExpire: { $gt: Date.now() }, // still valid?
     });
 
-    if (!user)
-      return res.status(400).json({ message: "Token inválido ou expirado" });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user.password = hashedPassword;
+    const { password } = req.body;
+
+    // Hash New Password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    // Clear reset fields
     user.resetToken = undefined;
     user.resetTokenExpire = undefined;
+
     await user.save();
 
-    res.json({ message: "✅ Senha redefinida com sucesso!" });
+    res.json({ success: true, message: "Password updated successfully" });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Erro no servidor" });
+    console.error("Reset Password Error:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
+
 /**
  * 🔹 UPDATE USER PROFILE
  */
