@@ -1357,25 +1357,40 @@ setPromoDismissed(true); // ONLY hides popup
       padding: "20px",
     }}
   >
-    <video
-      src={selectedVideo}
-      controls
-      autoPlay
-      playsInline
-      controlsList="nodownload"
-      onContextMenu={(e) => e.preventDefault()}
+    <div
       style={{
-        maxWidth: "90%",
-        maxHeight: "90%",
-        width: "auto",
-        height: "auto",
-        borderRadius: "8px",
-        outline: "none",
+        position: "relative",
+        maxWidth: "90vw",
+        maxHeight: "90vh",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
       onClick={(e) => e.stopPropagation()}
     >
-      Seu navegador não suporta a reprodução de vídeo.
-    </video>
+      <video
+        src={selectedVideo}
+        controls
+        autoPlay
+        playsInline
+        preload="auto"
+        controlsList="nodownload"
+        onContextMenu={(e) => e.preventDefault()}
+        style={{
+          maxWidth: "100%",
+          maxHeight: "90vh",
+          width: "auto",
+          height: "auto",
+          borderRadius: "8px",
+          outline: "none",
+          backgroundColor: "#000",
+        }}
+      >
+        <source src={selectedVideo} type="video/mp4" />
+        Seu navegador não suporta a reprodução de vídeo.
+      </video>
+    </div>
 
     <button
       onClick={(e) => {
@@ -1400,6 +1415,7 @@ setPromoDismissed(true); // ONLY hides popup
         justifyContent: "center",
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
         zIndex: 1000001,
+        transition: "background-color 0.2s",
       }}
       onMouseEnter={(e) =>
         (e.currentTarget.style.backgroundColor = "#b91c1c")
