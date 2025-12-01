@@ -188,15 +188,14 @@ useEffect(() => {
     mediaViewed: 45,
   };
 
-  const mediaContent = images.map((img, index) => ({
-    id: index + 1,
-    type: "photo",
-    title: img.name,
-    date: new Date().toISOString(),
-    locked: false,
-    thumbnail: `${CDN_BASE_URL}${img.name}`,
-    views: Math.floor(Math.random() * 500) + 50,
-  }));
+  const mediaContent = images.map((file) => ({
+  id: Math.random(),
+  type: file.type, // video or photo
+  title: file.name,
+  thumbnail: file.url,
+  url: file.url,
+}));
+
 
   const toggleLike = (id) => {
     setLikedItems((prev) =>
