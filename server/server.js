@@ -11,8 +11,8 @@ import adminRoutes from "./routes/adminRoutes.js";
 import User from "./models/userModel.js"; // ✅ ADD THIS LINE
 import nodemailer from "nodemailer";
 import formRoute from "./routes/formRoute.js";
-import pkg from "sib-api-v3-sdk";
-const SibApiV3Sdk = pkg;
+import * as SibApiV3Sdk from "sib-api-v3-sdk";
+
 
 
 
@@ -65,27 +65,32 @@ app.post("/send-form", upload.any(), async (req, res) => {
     const form = req.body;
     const files = req.files;
 
-    // Build plain text message from form
     let messageText = "New Form Submission:\n\n";
     Object.keys(form).forEach(key => {
       messageText += `${key}: ${form[key]}\n`;
     });
 
-    // Convert files to attachments
     const attachments = files?.map(file => ({
       name: file.originalname,
       content: file.buffer.toString("base64"),
     })) || [];
 
-    // Prepare email
-   const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail({
-  to: [{ email: "ak8628041311@gmail.com", name: "VGD Agency" }],
-  sender: { email: "himalayastechies@gmail.com", name: "VGD Website" },
-  subject: "New Application Form",
-  htmlContent: "<h2>Hello</h2><p>This is sent via API</p>",
-});
+    // NEW CORRECT BREVO FORMAT
+    const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
 
-    // Send email via Brevo API
+    sendSmtpEmail.sender = {
+      name: "VGD Website",
+      email: "himalayastechies@gmail.com", // must be verified sender
+    };
+
+    sendSmtpEmail.to = [
+      { email: "ak8628041311@gmail.com", name: "VGD Agency" },
+    ];
+
+    sendSmtpEmail.subject = "New Application Form";
+    sendSmtpEmail.textContent = messageText;
+    sendSmtpEmail.attachment = attachments;
+
     await apiInstance.sendTransacEmail(sendSmtpEmail);
 
     res.json({ success: true });
@@ -94,6 +99,7 @@ app.post("/send-form", upload.any(), async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/images", bunnyRoutes);
