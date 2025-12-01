@@ -11,7 +11,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import User from "./models/userModel.js"; // ✅ ADD THIS LINE
 import nodemailer from "nodemailer";
 import formRoute from "./routes/formRoute.js";
-import * as SibApiV3Sdk from "sib-api-v3-sdk";
+import SibApiV3Sdk from "sib-api-v3-sdk";
 
 
 
@@ -53,10 +53,11 @@ app.use(express.urlencoded({ extended: true }));
 
 const upload = multer();
 
-const abc = SibApiV3Sdk.ApiClient.instance;
-abc.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
+const defaultClient = SibApiV3Sdk.ApiClient.instance;
+defaultClient.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
 
 const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
 
 
 
