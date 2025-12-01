@@ -34,6 +34,7 @@ export default function SubscriberDashboard() {
   const [showPromo, setShowPromo] = useState(false);
   const [promoDismissed, setPromoDismissed] = useState(false);
   const [topBarDismissed, setTopBarDismissed] = useState(false);
+const [selectedVideo, setSelectedVideo] = useState(null);
 
   // ✅ Get user first
   const user = JSON.parse(localStorage.getItem("user"));
@@ -1098,9 +1099,17 @@ setPromoDismissed(true); // ONLY hides popup
                           }
                         />
                       </button>
-                      <button className="list-action-button" onClick={() => setSelectedImage(item.thumbnail)}>
-                        {item.type === "video" ? "Assistir" : "Ver"}
-                      </button>
+                      <button
+  className="action-button action-button-primary"
+  onClick={() =>
+    item.type === "video"
+      ? setSelectedVideo(item.url)
+      : setSelectedImage(item.thumbnail)
+  }
+>
+  {item.type === "video" ? "Assistir" : "Ver"}
+</button>
+
                     </div>
                   )}
                 </>
@@ -1327,6 +1336,36 @@ setPromoDismissed(true); // ONLY hides popup
     style={{ width: "35px", height: "35px" }}
   />
 </a>
+{selectedVideo && (
+  <div
+    className="modal-overlay"
+    onClick={() => setSelectedVideo(null)}
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      background: "rgba(0,0,0,0.7)",
+      zIndex: 2000,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <video
+      src={selectedVideo}
+      controls
+      autoPlay
+      style={{
+        maxWidth: "90%",
+        maxHeight: "90%",
+        borderRadius: "12px",
+      }}
+      onClick={(e) => e.stopPropagation()}
+    ></video>
+  </div>
+)}
 
     </div>
   );
