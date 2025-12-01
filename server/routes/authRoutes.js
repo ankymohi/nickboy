@@ -164,7 +164,7 @@ router.post("/forgot-password", async (req, res) => {
     user.resetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
     user.resetTokenExpire = Date.now() + 10 * 60 * 1000; // 10 min
 
-    await user.save();
+await user.save({ validateBeforeSave: false });
 
     // URL to send
     const resetURL = `https://www.nickboy.com.br/reset-password/${resetToken}`;
