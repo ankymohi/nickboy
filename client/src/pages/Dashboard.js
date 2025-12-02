@@ -189,14 +189,20 @@ useEffect(() => {
     mediaViewed: 45,
   };
 
-  const mediaContent = images.map((file) => ({
-  id: Math.random(),
-  type: file.type, // video or photo
-  title: file.name,
+ const mediaContent = images.map((file) => {
+  const isVideo = file.type === "video";
+  
+  return {
+    id: Math.random(),
+    type: file.type,
+    title: file.name,
     date: new Date().toISOString(),
-  thumbnail: file.url,
-  url: file.url,
-}));
+    // For videos, use the video URL directly as thumbnail (browser will show first frame)
+    thumbnail: file.url,
+    url: file.url,
+    duration: isVideo ? "0:00" : undefined,
+  };
+});
 
 
   const toggleLike = (id) => {
@@ -1024,12 +1030,16 @@ setPromoDismissed(true); // ONLY hides popup
 
                         <div className="media-hover-overlay">
                           <div className="media-actions">
-                            <button
-                              className="action-button action-button-primary"
-                              onClick={() => setSelectedImage(item.thumbnail)}
-                            >
-                              {item.type === "video" ? "Assistir" : "Ver"}
-                            </button>
+                           <button className="action-button action-button-primary"onClick={() => {
+if (item.type === "video") {
+      setSelectedVideo(item.url);
+    } else {
+      setSelectedImage(item.thumbnail);
+    }
+  }}
+>
+  {item.type === "video" ? "Assistir" : "Ver"}
+</button>
                           </div>
                         </div>
                       </>
@@ -1344,27 +1354,104 @@ setPromoDismissed(true); // ONLY hides popup
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: "rgba(0,0,0,0.9)",
+      backgroundColor: "rgba(0, 0, 0, 0.95)",
       zIndex: 999999,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      padding: "1rem",
+      overflow: "auto",
     }}
     onClick={() => setSelectedVideo(null)}
   >
-    <video
-      src={selectedVideo}
-      controls
-      autoPlay
-      playsInline
+    {/* Close Button */}
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelectedVideo(null);
+      }}
+      style={{
+        position: "absolute",
+        top: "1rem",
+        right: "1rem",
+        width: "48px",
+        height: "48px",
+        backgroundColor: "#dc2626",
+        color: "white",
+        fontSize: "24px",
+        fontWeight: "bold",
+        border: "2px solid white",
+        borderRadius: "50%",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
+        zIndex: 1000001,
+      }}
+      onMouseEnter={(e) =>
+        (e.currentTarget.style.backgroundColor = "#b91c1c")
+      }
+      onMouseLeave={(e) =>
+        (e.currentTarget.style.backgroundColor = "#dc2626")
+      }
+    >
+      ✕
+    </button>
+
+    {/* Video Container */}
+    <div
+      onClick={(e) => e.stopPropagation()}
       style={{
         width: "90%",
-        maxWidth: "800px",
-        borderRadius: "10px",
+        maxWidth: "900px",
+        backgroundColor: "#000",
+        borderRadius: "12px",
+        overflow: "hidden",
+        boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
       }}
-    />
+    >
+      <video
+        key={selectedVideo}
+        src={selectedVideo}
+        controls
+        controlsList="nodownload"
+        autoPlay
+        playsInline
+        preload="metadata"
+        onContextMenu={(e) => e.preventDefault()}
+        style={{
+          width: "100%",
+          height: "auto",
+          maxHeight: "80vh",
+          display: "block",
+          backgroundColor: "#000",
+        }}
+        onError={(e) => {
+          console.error("Video load error:", e);
+          alert("Erro ao carregar vídeo. Tente novamente.");
+        }}
+      >
+        Seu navegador não suporta reprodução de vídeo.
+      </video>
+
+      {/* Video Info Bar */}
+      <div
+        style={{
+          padding: "12px 16px",
+          backgroundColor: "#1a1a1a",
+          color: "white",
+          fontSize: "14px",
+        }}
+      >
+        <p style={{ margin: 0, opacity: 0.8 }}>
+          Toque fora para fechar • Use os controles para play/pause
+        </p>
+      </div>
+    </div>
   </div>
 )}
+
 
     </div>
   );
