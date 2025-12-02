@@ -1338,96 +1338,34 @@ setPromoDismissed(true); // ONLY hides popup
 </a>
 {selectedVideo && (
   <div
-    onClick={(e) => {
-      if (e.target === e.currentTarget) {
-        setSelectedVideo(null);
-      }
-    }}
     style={{
       position: "fixed",
       top: 0,
       left: 0,
-      width: "100vw",
-      height: "100vh",
-      backgroundColor: "rgba(0,0,0,0.95)",
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0,0,0,0.9)",
+      zIndex: 999999,
       display: "flex",
-      justifyContent: "center",
       alignItems: "center",
-      zIndex: 1000000,
-      padding: "20px",
+      justifyContent: "center",
     }}
+    onClick={() => setSelectedVideo(null)}
   >
-    <div
+    <video
+      src={selectedVideo}
+      controls
+      autoPlay
+      playsInline
       style={{
-        position: "relative",
-        maxWidth: "90vw",
-        maxHeight: "90vh",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        width: "90%",
+        maxWidth: "800px",
+        borderRadius: "10px",
       }}
-      onClick={(e) => e.stopPropagation()}
-    >
-      <video
-        src={selectedVideo}
-        controls
-        autoPlay
-        playsInline
-        preload="auto"
-        controlsList="nodownload"
-        onContextMenu={(e) => e.preventDefault()}
-        style={{
-          maxWidth: "100%",
-          maxHeight: "90vh",
-          width: "auto",
-          height: "auto",
-          borderRadius: "8px",
-          outline: "none",
-          backgroundColor: "#000",
-        }}
-      >
-        <source src={selectedVideo} type="video/mp4" />
-        Seu navegador não suporta a reprodução de vídeo.
-      </video>
-    </div>
-
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        setSelectedVideo(null);
-      }}
-      style={{
-        position: "absolute",
-        top: "1rem",
-        right: "1rem",
-        width: "48px",
-        height: "48px",
-        backgroundColor: "#dc2626",
-        color: "white",
-        fontSize: "24px",
-        fontWeight: "bold",
-        border: "2px solid white",
-        borderRadius: "50%",
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
-        zIndex: 1000001,
-        transition: "background-color 0.2s",
-      }}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.backgroundColor = "#b91c1c")
-      }
-      onMouseLeave={(e) =>
-        (e.currentTarget.style.backgroundColor = "#dc2626")
-      }
-    >
-      ✕
-    </button>
+    />
   </div>
 )}
+
     </div>
   );
 }
