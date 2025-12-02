@@ -99,7 +99,30 @@
 
 /* Blur screen when screenshot is attempted (Chrome, Android, iOS) */
 
+/* Video thumbnail styling */
+.media-thumbnail-wrapper video,
+.list-thumbnail-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
+/* Ensure video thumbnails show first frame */
+video[preload="metadata"] {
+  display: block;
+}
+
+/* Hide video controls in thumbnails */
+.media-thumbnail-wrapper video::-webkit-media-controls,
+.list-thumbnail-wrapper video::-webkit-media-controls {
+  display: none !important;
+}
+
+.media-thumbnail-wrapper video::-webkit-media-controls-enclosure,
+.list-thumbnail-wrapper video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   background: var(--color-bg-primary);
