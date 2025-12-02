@@ -987,64 +987,80 @@ setPromoDismissed(true); // ONLY hides popup
             >
               {viewMode === "grid" ? (
                 <>
-                  <div className="media-thumbnail-wrapper">
-                    <img
-                      src={item.thumbnail}
-                      alt={item.title}
-                      className={`media-thumbnail ${
-                        item.locked ? "media-locked-blur" : ""
-                      }`}
-                    />
+                <div className="media-thumbnail-wrapper">
+  {item.type === "video" ? (
+    // For videos, use video element as thumbnail
+    <video
+      src={item.url}
+      className={`media-thumbnail ${item.locked ? "media-locked-blur" : ""}`}
+      muted
+      playsInline
+      preload="metadata"
+      onContextMenu={(e) => e.preventDefault()}
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        pointerEvents: "none",
+      }}
+    />
+  ) : (
+    // For images, use img tag
+    <img
+      src={item.thumbnail}
+      alt={item.title}
+      className={`media-thumbnail ${item.locked ? "media-locked-blur" : ""}`}
+    />
+  )}
 
-                    {item.locked && (
-                      <div className="media-locked-overlay">
-                        <Lock size={32} />
-                        <p className="media-locked-text">VIP Only</p>
-                      </div>
-                    )}
+  {item.locked && (
+    <div className="media-locked-overlay">
+      <Lock size={32} />
+      <p className="media-locked-text">VIP Only</p>
+    </div>
+  )}
 
-                    {!item.locked && (
-                      <>
-                        {item.type === "video" && (
-                          <div className="video-duration">
-                            <Play size={12} />
-                            {item.duration}
-                          </div>
-                        )}
+  {!item.locked && (
+    <>
+      {item.type === "video" && (
+        <div className="video-duration">
+          <Play size={12} />
+          {item.duration}
+        </div>
+      )}
 
-                        <button
-                          onClick={() => toggleLike(item.id)}
-                          className={`like-button ${
-                            likedItems.includes(item.id)
-                              ? "like-button-active"
-                              : ""
-                          }`}
-                        >
-                          <Heart
-                            size={16}
-                            className={
-                              likedItems.includes(item.id) ? "heart-filled" : ""
-                            }
-                          />
-                        </button>
+      <button
+        onClick={() => toggleLike(item.id)}
+        className={`like-button ${
+          likedItems.includes(item.id) ? "like-button-active" : ""
+        }`}
+      >
+        <Heart
+          size={16}
+          className={likedItems.includes(item.id) ? "heart-filled" : ""}
+        />
+      </button>
 
-                        <div className="media-hover-overlay">
-                          <div className="media-actions">
-                           <button className="action-button action-button-primary"onClick={() => {
-if (item.type === "video") {
-      setSelectedVideo(item.url);
-    } else {
-      setSelectedImage(item.thumbnail);
-    }
-  }}
->
-  {item.type === "video" ? "Assistir" : "Ver"}
-</button>
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </div>
+      <div className="media-hover-overlay">
+        <div className="media-actions">
+          <button
+            className="action-button action-button-primary"
+            onClick={() => {
+              if (item.type === "video") {
+                setSelectedVideo(item.url);
+              } else {
+                setSelectedImage(item.thumbnail);
+              }
+            }}
+          >
+            {item.type === "video" ? "Assistir" : "Ver"}
+          </button>
+        </div>
+      </div>
+    </>
+  )}
+</div>
+
 
                   <div className="media-info">
                     <h3 className="media-title">{item.title}</h3>
