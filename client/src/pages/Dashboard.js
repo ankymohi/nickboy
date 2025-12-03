@@ -994,8 +994,12 @@ setPromoDismissed(true); // ONLY hides popup
       src={item.url}
       className={`media-thumbnail ${item.locked ? "media-locked-blur" : ""}`}
       muted
+      poster={item.url + "#t=0.1"}
       playsInline
       preload="metadata"
+onLoadedMetadata={(e) => {
+    e.target.currentTime = 0.1;
+  }}
       onContextMenu={(e) => e.preventDefault()}
       style={{
         width: "100%",
