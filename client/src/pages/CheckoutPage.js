@@ -11,9 +11,9 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const promoPrices = {
-    "Pack 1": { price: "1", originalPrice: "49.99" },
-    "Pack 2": { price: "1", originalPrice: "99.99" },
-    "Pack 3": { price: "1", originalPrice: "299.99" },
+    "Pack 1": { price: "19.99", originalPrice: "49.99" },
+    "Pack 2": { price: "59.99", originalPrice: "99.99" },
+    "Pack 3": { price: "199.99", originalPrice: "299.99" },
   };
 
   const plans = [
