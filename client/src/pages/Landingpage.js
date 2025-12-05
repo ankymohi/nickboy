@@ -33,7 +33,10 @@ export default function PortfolioHero() {
         height: '100%',
         width: '100%',
         maxWidth: '50%',
-        background: url('../assets/1.jpeg') center/cover no-repeat;
+backgroundImage: `url(${require('../assets/1.jpeg')})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat'
       }}>
         <div style={{
           position: 'relative',
