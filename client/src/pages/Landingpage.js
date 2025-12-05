@@ -72,7 +72,7 @@ backgroundImage: `url(${require('../assets/1.jpeg')})`,
         height: '100%',
         display: 'flex',
         alignItems: 'center',
-        padding: '0 90px'
+        padding: '0 70px'
       }}>
         <div style={{ maxWidth: '600px' }}>
           {/* Main Headline */}
