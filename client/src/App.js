@@ -10,6 +10,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Success from "./pages/Success";
 import PromoCheckout from "./pages/PromoCheckout";   // ✅ NEW
 import FormModal from "./pages/FormModal";
+import Landingpage from "./pages/Landingpage";
 function App() {
   return (
     <Router>
@@ -18,6 +19,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/login" element={<Login />} />
+          <Route path="/Landingpage" element={<Landingpage />} />
 <Route path="/FormModal" element={<FormModal />} />
         {/* Normal checkout */}
         <Route path="/CheckoutPage" element={<CheckoutPage />} />
