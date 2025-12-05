@@ -241,7 +241,9 @@ const plans = [
     <button className="vgd-btn-signup" onClick={() => navigate("/login")}>
       Cadastre-se como cliente
     </button>
-
+ <button className="vgd-btn-signup" onClick={() => navigate("/Landingpage")}>
+      Landing-page
+    </button>
     <button className="vgd-btn-signup vgd-model-btn" onClick={() => navigate("/login")}>
       Quero ser modelo
     </button>
