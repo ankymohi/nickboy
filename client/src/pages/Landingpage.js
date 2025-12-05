@@ -21,7 +21,6 @@ export default function PortfolioHero() {
         left: 0,
         right: 0,
         bottom: 0,
-        background: 'linear-gradient(to right, #000 0%, rgba(0,0,0,0.95) 50%, transparent 100%)',
         zIndex: 10
       }} />
       
@@ -51,7 +50,7 @@ backgroundImage: `url(${require('../assets/1.jpeg')})`,
             right: 0,
             bottom: 0,
             background: 'linear-gradient(to bottom, #4a4a4a, #000)',
-            opacity: 0.5
+          
           }} />
           <div style={{
             position: 'absolute',
@@ -72,7 +71,7 @@ backgroundImage: `url(${require('../assets/1.jpeg')})`,
         height: '100%',
         display: 'flex',
         alignItems: 'center',
-        padding: '0 80px'
+        padding: '0 40px'
       }}>
         <div style={{ maxWidth: '600px' }}>
           {/* Main Headline */}
