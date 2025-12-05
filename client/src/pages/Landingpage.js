@@ -175,7 +175,13 @@ backgroundImage: `url(${require('../assets/1.jpeg')})`,
             padding: 0 120px !important;
           }
         }
-      `}</style>
+        @media (max-width: 768px) {
+  .hero-content {
+    padding: 0 20px !important;
+  }
+}
+      `}
+</style>
     </div>
   );
 }
