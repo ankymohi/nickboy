@@ -32,7 +32,8 @@ export default function PortfolioHero() {
         top: 0,
         height: '100%',
         width: '100%',
-        maxWidth: '50%'
+        maxWidth: '50%',
+        background: url('../assets/1.jpeg') center/cover no-repeat;
       }}>
         <div style={{
           position: 'relative',
