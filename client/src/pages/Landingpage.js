@@ -2,9 +2,13 @@ import React from 'react';
 
 export default function PortfolioHero() {
   const handleWhatsAppClick = () => {
-    // Replace with your WhatsApp number
-    window.open('https://wa.me/5511999999999', '_blank');
-  };
+  const number = "5511987058492"; 
+  const message = "Quero ver as prévias !";
+  const encodedMessage = encodeURIComponent(message);
+
+  window.open(`https://wa.me/${number}?text=${encodedMessage}`, "_blank");
+};
+
 
   return (
     <div style={{
