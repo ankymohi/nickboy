@@ -144,28 +144,7 @@ backgroundImage: `url(${require('../assets/1.jpeg')})`,
         </div>
       </div>
 
-      {/* Movie Icon in bottom right */}
-      <div style={{
-        position: 'absolute',
-        bottom: '32px',
-        right: '32px',
-        zIndex: 20
-      }}>
-        <div style={{
-          width: '80px',
-          height: '80px',
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #f97316, #dc2626, #ec4899)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4)'
-        }}>
-          <svg width="40" height="40" fill="#fff" viewBox="0 0 24 24">
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 11H9.5v3H8v-3H6.5v-1.5H8v-3h1.5v3H11V14zm7 3h-1.5v-4.5h-1v-1l2.5-2V14z"/>
-          </svg>
-        </div>
-      </div>
+
 
       {/* Responsive styles */}
       <style>{`
