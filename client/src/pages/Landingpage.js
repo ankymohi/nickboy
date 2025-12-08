@@ -66,16 +66,17 @@ backgroundImage: `url(${require('../assets/1.jpeg')})`,
       </div>
 
       {/* Content */}
-      <div style={{
-        position: 'relative',
-        zIndex: 20,
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-            padding: '0px 100px',
-    padding-left: '10px'
-}
-      }}>
+     <div
+  style={{
+    position: 'relative',
+    zIndex: 20,
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0px 100px 0px 10px'
+  }}
+>
+
         <div style={{ maxWidth: '600px' }}>
           {/* Main Headline */}
           <h1 style={{
