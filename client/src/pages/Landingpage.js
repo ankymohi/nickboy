@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function PortfolioHero() {
   const handleWhatsAppClick = () => {
-  const number = "5511987058492"; 
+  const number = "5511981447980"; 
   const message = "Quero ver as prévias !";
   const encodedMessage = encodeURIComponent(message);
 
