@@ -92,8 +92,8 @@ backgroundImage: `url(${require('../assets/1.jpeg')})`,
             marginBottom: '24px',
             letterSpacing: '0.5px'
           }}>
-            Conteúdos exclusivos e atendimento personalizado — fale comigo no WhatsApp 🌈
-          </h1>
+Me chama agora no WhatsApp e 
+receba um conteúdo privado exclusivo de boas-vindas + uma oferta especial só pra quem veio pelo anúncio. Rápido, reservado e feito pra te deixar querendo mais.”          </h1>
           
           {/* Subtitle */}
           <p style={{
@@ -138,7 +138,7 @@ backgroundImage: `url(${require('../assets/1.jpeg')})`,
           >
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
               <span style={{ fontSize: '24px' }}>👉</span>
-              Quero receber agora no WhatsApp
+Receber meu bônus de boas-vindas
             </span>
           </button>
         </div>
