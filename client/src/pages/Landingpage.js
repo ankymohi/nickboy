@@ -108,39 +108,40 @@ receba um conteúdo privado exclusivo de boas-vindas + uma oferta especial só p
           </p>
           
           {/* WhatsApp Button */}
-          <button
-            onClick={handleWhatsAppClick}
-            style={{
-              background: 'linear-gradient(to right, #dc2626, #ef4444)',
-              color: '#fff',
-              padding: '18px 40px',
-              fontSize: 'clamp(16px, 2vw, 20px)',
-              fontWeight: 600,
-              letterSpacing: '0.5px',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              boxShadow: '0 10px 30px rgba(220, 38, 38, 0.4)',
-              transition: 'all 0.3s ease',
-              fontFamily: 'Arial, sans-serif',
-              display: 'inline-block'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px) scale(1.02)';
-              e.target.style.background = 'linear-gradient(to right, #ef4444, #f87171)';
-              e.target.style.boxShadow = '0 15px 40px rgba(220, 38, 38, 0.5)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0) scale(1)';
-              e.target.style.background = 'linear-gradient(to right, #dc2626, #ef4444)';
-              e.target.style.boxShadow = '0 10px 30px rgba(220, 38, 38, 0.4)';
-            }}
-          >
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ fontSize: '24px' }}>👉</span>
-Receber meu bônus de boas-vindas
-            </span>
-          </button>
+         <button
+  onClick={handleWhatsAppClick}
+  style={{
+    background: 'linear-gradient(to right, #16a34a, #22c55e)',
+    color: '#fff',
+    padding: '18px 40px',
+    fontSize: 'clamp(16px, 2vw, 20px)',
+    fontWeight: 600,
+    letterSpacing: '0.5px',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    boxShadow: '0 10px 30px rgba(34, 197, 94, 0.4)',
+    transition: 'all 0.3s ease',
+    fontFamily: 'Arial, sans-serif',
+    display: 'inline-block'
+  }}
+  onMouseEnter={(e) => {
+    e.target.style.transform = 'translateY(-2px) scale(1.02)';
+    e.target.style.background = 'linear-gradient(to right, #22c55e, #4ade80)';
+    e.target.style.boxShadow = '0 15px 40px rgba(34, 197, 94, 0.5)';
+  }}
+  onMouseLeave={(e) => {
+    e.target.style.transform = 'translateY(0) scale(1)';
+    e.target.style.background = 'linear-gradient(to right, #16a34a, #22c55e)';
+    e.target.style.boxShadow = '0 10px 30px rgba(34, 197, 94, 0.4)';
+  }}
+>
+  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
+    <span style={{ fontSize: '24px' }}>👉</span>
+    Receber meu bônus de boas-vindas
+  </span>
+</button>
+
         </div>
       </div>
 
