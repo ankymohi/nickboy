@@ -3,7 +3,7 @@ import React from 'react';
 export default function PortfolioHero() {
   const handleWhatsAppClick = () => {
   const number = "5511981447980"; 
-  const message = "Quero ver as prévias !";
+  const message = "Quero conhecer os produtos !";
   const encodedMessage = encodeURIComponent(message);
 
   window.open(`https://wa.me/${number}?text=${encodedMessage}`, "_blank");
