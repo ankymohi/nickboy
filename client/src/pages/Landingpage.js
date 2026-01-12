@@ -112,17 +112,9 @@ export default function LinkmeProfile() {
         <div style={styles.footer}>
           <div style={styles.footerBranding}>
             <div style={styles.footerAvatar}>
-              <img src={img1} alt="Avatar" style={styles.avatarImg} />
             </div>
-            <div style={styles.footerLogo}>me</div>
           </div>
-          <div style={styles.footerText}>Create Your Profile On Linkme</div>
           <div style={styles.footerLinks}>
-            <a href="#" style={styles.footerLink} onClick={(e) => { e.preventDefault(); alert('Privacy Policy'); }}>Privacy Policy</a>
-            <span style={styles.separator}>|</span>
-            <a href="#" style={styles.footerLink} onClick={(e) => { e.preventDefault(); alert('Terms'); }}>Terms</a>
-            <span style={styles.separator}>|</span>
-            <a href="#" style={styles.footerLink} onClick={(e) => { e.preventDefault(); alert('Report'); }}>Report</a>
           </div>
         </div>
       </div>
