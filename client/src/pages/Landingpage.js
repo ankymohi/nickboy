@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import img1 from "../assets/11111.jpg";
 import img2 from "../assets/44444.jpg";
 import img3 from "../assets/33333.jpg";
 import img4 from "../assets/222222.jpg";
+
 export default function LinkmeProfile() {
   const [activeTab, setActiveTab] = useState('shouts');
+
+  // Add animation keyframes when component mounts
+  useEffect(() => {
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = `
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+    
+    // Cleanup
+    return () => {
+      document.head.removeChild(styleSheet);
+    };
+  }, []);
 
   return (
     <div style={styles.body}>
@@ -12,8 +30,8 @@ export default function LinkmeProfile() {
         {/* Hero Section */}
         <div style={styles.heroSection}>
           <img 
-src={img1}
-  alt="Nick" 
+            src={img1}
+            alt="Nick" 
             style={styles.heroImage}
           />
           
@@ -76,13 +94,13 @@ src={img1}
           {/* Image Grid */}
           <div style={styles.imageGrid}>
             <div style={styles.gridItem}>
-<img src={img2} alt="Preview 1" style={styles.gridImage} />
+              <img src={img2} alt="Preview 1" style={styles.gridImage} />
             </div>
             <div style={styles.gridItem}>
-<img src={img3} alt="Preview 1" style={styles.gridImage} />
+              <img src={img3} alt="Preview 2" style={styles.gridImage} />
             </div>
             <div style={styles.gridItem}>
-<img src={img4} alt="Preview 1" style={styles.gridImage} />
+              <img src={img4} alt="Preview 3" style={styles.gridImage} />
             </div>
           </div>
 
@@ -109,7 +127,11 @@ src={img1}
           <div style={styles.noContent}>
             <div style={styles.noContentEmoji}>💬</div>
             <h3 style={styles.noContentTitle}>No Shouts yet!</h3>
-            <p style={styles.noContentText}>Shouts posted by Nick will<br/>appear here</p>
+            <p style={styles.noContentText}>
+              Shouts posted by Nick will
+              <br/>
+              appear here
+            </p>
           </div>
         </div>
 
@@ -376,13 +398,3 @@ const styles = {
     color: '#404040',
   },
 };
-
-// Add keyframe animation for rotation
-const styleSheet = document.createElement("style");
-styleSheet.innerText = `
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-`;
-document.head.appendChild(styleSheet);
