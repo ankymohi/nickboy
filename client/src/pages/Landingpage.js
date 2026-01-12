@@ -169,6 +169,16 @@ const styles = {
     color: '#fff',
     margin: 0,
   },
+  footerAvatar: {
+    width: "60px",
+    height: "60px",
+  },
+  avatarImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    borderRadius: "50%",
+  },
   profileContainer: {
     width: '100%',
     maxWidth: '480px',
