@@ -105,33 +105,24 @@ export default function LinkmeProfile() {
           </div>
 
           {/* Favorite Text */}
-          <p style={styles.favoriteText}>Seu motorista favorito está aqui. 🏎️💨</p>
+          <p style={styles.favoriteText}>Ele vem de moto,
+volta deixando saudade.
+Nickboy — seu corre +18
+
+Nem toda corrida é comportada.
+Confira as gostosuras aqui.
+Seu motorista 18+</p>
 
           {/* Tabs */}
           <div style={styles.tabs}>
-            <div 
-              style={{...styles.tab, ...(activeTab === 'shouts' ? styles.tabActive : styles.tabInactive)}}
-              onClick={() => setActiveTab('shouts')}
-            >
-              Shouts
-            </div>
-            <div 
-              style={{...styles.tab, ...(activeTab === 'media' ? styles.tabActive : styles.tabInactive)}}
-              onClick={() => setActiveTab('media')}
-            >
-              Media
+
+            
             </div>
           </div>
 
           {/* No Content */}
           <div style={styles.noContent}>
-            <div style={styles.noContentEmoji}>💬</div>
-            <h3 style={styles.noContentTitle}>No Shouts yet!</h3>
-            <p style={styles.noContentText}>
-              Shouts posted by Nick will
-              <br/>
-              appear here
-            </p>
+            
           </div>
         </div>
 
