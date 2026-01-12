@@ -217,7 +217,7 @@ const styles = {
   whatsappButton: {
     width: '100%',
     padding: '16px 24px',
-background: '#22c55e',
+
     border: '2px solid #ef4444',
     borderRadius: '50px',
     color: '#fff',
