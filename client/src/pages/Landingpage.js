@@ -138,7 +138,7 @@ export default function LinkmeProfile() {
         {/* Footer */}
         <div style={styles.footer}>
           <div style={styles.footerBranding}>
-            <div style={styles.footerAvatar}></div>
+            <div style={styles.footerAvatar}>{img1}</div>
             <div style={styles.footerLogo}>me</div>
           </div>
           <div style={styles.footerText}>Create Your Profile On Linkme</div>
