@@ -47,7 +47,7 @@ export default function LinkmeProfile() {
           {/* WhatsApp Button */}
           <div style={styles.whatsappButtonWrapper}>
             <svg style={styles.whatsappIconLeft} viewBox="0 0 24 24" fill="none">
-              <path d="M12 2C6.48 2 2 6.48 2 12c0 1.87.52 3.62 1.42 5.12L2 22l5.12-1.42C8.62 21.48 10.37 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.45 14.36c-.23.64-1.35 1.24-1.87 1.3-.52.06-1.01.24-3.42-.72-2.89-1.15-4.73-4.09-4.88-4.28-.14-.19-1.18-1.57-1.18-2.99 0-1.42.75-2.12 1.02-2.41.27-.29.59-.36.79-.36.2 0 .4 0 .57.01.18.01.43-.07.67.51.24.58.83 2.03.9 2.18.07.15.12.33.02.52-.1.19-.15.31-.29.48-.14.17-.29.38-.42.51-.14.14-.28.29-.12.57.16.28.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.27 1.4.28.14.45.12.62-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.92.28.14.47.21.54.33.07.12.07.69-.16 1.33z" fill="#25D366"/>
+              <path d="M12 2C6.48 2 2 6.48 2 12c0 1.87.52 3.62 1.42 5.12L2 22l5.12-1.42C8.62 21.48 10.37 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.45 14.36c-.23.64-1.35 1.24-1.87 1.3-.52.06-1.01.24-3.42-.72-2.89-1.15-4.73-4.09-4.88-4.28-.14-.19-1.18-1.57-1.18-2.99 0-1.42.75-2.12 1.02-2.41.27-.29.59-.36.79-.36.2 0 .4 0 .57.01.18.01.43-.07.67.51.24.58.83 2.03.9 2.18.07.15.12.33.02.52-.1.19-.15.31-.29.48-.14.17-.29.38-.42.51-.14.14-.28.29-.12.57.16.28.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.27 1.4.28.14.45.12.62-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.92.28.14.47.21.54.33.07.12.07.69-.16 1.33z" fill="#ef4444"/>
             </svg>
             <button style={styles.whatsappButton} onClick={() => window.open('https://wa.me/', '_blank')}>
               Vem falar comigo
@@ -57,15 +57,15 @@ export default function LinkmeProfile() {
           {/* Exclusive Content Button */}
           <button style={styles.exclusiveButton} onClick={() => alert('Conteúdo exclusivo!')}>
             <svg style={styles.exclusiveIcon} viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="2" fill="#06b6d4"/>
-              <circle cx="12" cy="4" r="1.5" fill="#06b6d4"/>
-              <circle cx="12" cy="20" r="1.5" fill="#06b6d4"/>
-              <circle cx="4" cy="12" r="1.5" fill="#06b6d4"/>
-              <circle cx="20" cy="12" r="1.5" fill="#06b6d4"/>
-              <circle cx="7" cy="7" r="1" fill="#06b6d4"/>
-              <circle cx="17" cy="7" r="1" fill="#06b6d4"/>
-              <circle cx="7" cy="17" r="1" fill="#06b6d4"/>
-              <circle cx="17" cy="17" r="1" fill="#06b6d4"/>
+              <circle cx="12" cy="12" r="2" fill="#fff"/>
+              <circle cx="12" cy="4" r="1.5" fill="#fff"/>
+              <circle cx="12" cy="20" r="1.5" fill="#fff"/>
+              <circle cx="4" cy="12" r="1.5" fill="#fff"/>
+              <circle cx="20" cy="12" r="1.5" fill="#fff"/>
+              <circle cx="7" cy="7" r="1" fill="#fff"/>
+              <circle cx="17" cy="7" r="1" fill="#fff"/>
+              <circle cx="7" cy="17" r="1" fill="#fff"/>
+              <circle cx="17" cy="17" r="1" fill="#fff"/>
             </svg>
             Conteúdo exclusivo
           </button>
@@ -133,7 +133,7 @@ export default function LinkmeProfile() {
 const styles = {
   body: {
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-    background: 'linear-gradient(180deg, #0e7490 0%, #06b6d4 100%)',
+    background: 'linear-gradient(135deg, #2d0a0e 0%, #5a1520 50%, #1a0507 100%)',
     minHeight: '100vh',
     display: 'flex',
     justifyContent: 'center',
@@ -145,7 +145,7 @@ const styles = {
   profileContainer: {
     width: '100%',
     maxWidth: '480px',
-    background: '#000',
+    background: 'linear-gradient(180deg, #1a0507 0%, #0d0304 100%)',
     minHeight: '100vh',
     position: 'relative',
   },
@@ -165,7 +165,7 @@ const styles = {
     left: 0,
     right: 0,
     padding: '20px',
-    background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%)',
+    background: 'linear-gradient(to top, rgba(26,5,7,0.95) 0%, rgba(45,10,14,0.8) 50%, transparent 100%)',
     textAlign: 'center',
   },
   profileName: {
@@ -218,7 +218,7 @@ const styles = {
     width: '100%',
     padding: '16px 24px',
     background: 'transparent',
-    border: '2px solid #25D366',
+    border: '2px solid #ef4444',
     borderRadius: '50px',
     color: '#fff',
     fontSize: '17px',
@@ -230,10 +230,10 @@ const styles = {
   exclusiveButton: {
     width: '100%',
     padding: '18px 24px',
-    background: '#fff',
+    background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
     border: 'none',
     borderRadius: '50px',
-    color: '#000',
+    color: '#fff',
     fontSize: '17px',
     fontWeight: 700,
     cursor: 'pointer',
@@ -259,7 +259,7 @@ const styles = {
     aspectRatio: '1',
     borderRadius: '20px',
     overflow: 'hidden',
-    background: '#1a1a1a',
+    background: '#2a0a0f',
   },
   gridImage: {
     width: '100%',
@@ -277,7 +277,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     gap: '40px',
-    borderBottom: '1px solid #262626',
+    borderBottom: '1px solid #3d1419',
     paddingBottom: '12px',
     marginBottom: '30px',
   },
@@ -292,7 +292,7 @@ const styles = {
   },
   tabActive: {
     color: '#fff',
-    borderBottom: '3px solid #fff',
+    borderBottom: '3px solid #ef4444',
   },
   tabInactive: {
     color: '#525252',
@@ -323,7 +323,7 @@ const styles = {
   footer: {
     textAlign: 'center',
     padding: '30px 20px 40px',
-    borderTop: '1px solid #171717',
+    borderTop: '1px solid #2d0a0e',
   },
   footerBranding: {
     display: 'flex',
@@ -336,13 +336,13 @@ const styles = {
     width: '36px',
     height: '36px',
     borderRadius: '50%',
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
   },
   footerLogo: {
     width: '36px',
     height: '36px',
     borderRadius: '50%',
-    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
