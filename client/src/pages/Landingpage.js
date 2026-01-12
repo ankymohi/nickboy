@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import img1 from "../assets/photo1.jpg";
-import img2 from "../assets/photo2.jpg";
-import img3 from "../assets/photo3.jpg";
-import img4 from "../assets/photo4.jpg";
+import img1 from "../assets/11111.jpg";
+import img2 from "../assets/44444.jpg";
+import img3 from "../assets/33333.jpg";
+import img4 from "../assets/222222.jpg";
 export default function LinkmeProfile() {
   const [activeTab, setActiveTab] = useState('shouts');
 
@@ -12,8 +12,8 @@ export default function LinkmeProfile() {
         {/* Hero Section */}
         <div style={styles.heroSection}>
           <img 
-            src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&h=800&fit=crop" 
-            alt="Nick" 
+src={img1}
+  alt="Nick" 
             style={styles.heroImage}
           />
           
@@ -76,13 +76,13 @@ export default function LinkmeProfile() {
           {/* Image Grid */}
           <div style={styles.imageGrid}>
             <div style={styles.gridItem}>
-<img src={img1} alt="Preview 1" style={styles.gridImage} />
+<img src={img2} alt="Preview 1" style={styles.gridImage} />
             </div>
             <div style={styles.gridItem}>
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" alt="Preview 2" style={styles.gridImage}/>
+<img src={img3} alt="Preview 1" style={styles.gridImage} />
             </div>
             <div style={styles.gridItem}>
-              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop" alt="Preview 3" style={styles.gridImage}/>
+<img src={img4} alt="Preview 1" style={styles.gridImage} />
             </div>
           </div>
 
