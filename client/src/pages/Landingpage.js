@@ -76,7 +76,7 @@ export default function LinkmeProfile() {
           {/* Image Grid */}
           <div style={styles.imageGrid}>
             <div style={styles.gridItem}>
-              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop" alt="Preview 1" style={styles.gridImage}/>
+<img src={img1} alt="Preview 1" style={styles.gridImage} />
             </div>
             <div style={styles.gridItem}>
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" alt="Preview 2" style={styles.gridImage}/>
