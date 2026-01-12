@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import img1 from "../assets/11111.JPG";
 import img2 from "../assets/44444.JPG";
 import img3 from "../assets/33333.JPG";
 import img4 from "../assets/222222.JPG";
 
 export default function LinkmeProfile() {
-  const [activeTab, setActiveTab] = useState('shouts');
-
   // Add animation keyframes when component mounts
   useEffect(() => {
     const styleSheet = document.createElement("style");
@@ -116,31 +114,6 @@ export default function LinkmeProfile() {
             Confira as gostosuras aqui.<br/>
             Seu motorista 18+
           </p>
-
-          {/* Tabs */}
-          <div style={styles.tabs}>
-            <div 
-              style={{...styles.tab, ...(activeTab === 'shouts' ? styles.tabActive : styles.tabInactive)}}
-              onClick={() => setActiveTab('shouts')}
-            >
-              Shouts
-            </div>
-            <div 
-              style={{...styles.tab, ...(activeTab === 'media' ? styles.tabActive : styles.tabInactive)}}
-              onClick={() => setActiveTab('media')}
-            >
-              Media
-            </div>
-          </div>
-
-          {/* No Content */}
-          <div style={styles.noContent}>
-            <div style={styles.noContentEmoji}>💬</div>
-            <h3 style={styles.noContentTitle}>No Shouts yet!</h3>
-            <p style={styles.noContentText}>
-              Shouts posted by Nick will<br/>appear here
-            </p>
-          </div>
         </div>
 
         {/* Footer */}
@@ -308,53 +281,6 @@ const styles = {
     marginBottom: '24px',
     fontWeight: 400,
     lineHeight: '1.6',
-  },
-  tabs: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '40px',
-    borderBottom: '1px solid #3d1419',
-    paddingBottom: '12px',
-    marginBottom: '30px',
-  },
-  tab: {
-    fontSize: '16px',
-    fontWeight: 700,
-    cursor: 'pointer',
-    paddingBottom: '12px',
-    borderBottom: '3px solid transparent',
-    transition: 'all 0.2s',
-    position: 'relative',
-  },
-  tabActive: {
-    color: '#fff',
-    borderBottom: '3px solid #ef4444',
-  },
-  tabInactive: {
-    color: '#525252',
-    fontWeight: 600,
-  },
-  noContent: {
-    textAlign: 'center',
-    padding: '50px 30px 60px',
-  },
-  noContentEmoji: {
-    fontSize: '80px',
-    marginBottom: '20px',
-    display: 'inline-block',
-  },
-  noContentTitle: {
-    fontSize: '26px',
-    fontWeight: 700,
-    marginBottom: '10px',
-    color: '#fff',
-    margin: '0 0 10px 0',
-  },
-  noContentText: {
-    fontSize: '15px',
-    color: '#737373',
-    fontWeight: 400,
-    margin: 0,
   },
   footer: {
     textAlign: 'center',
