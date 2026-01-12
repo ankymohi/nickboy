@@ -20,7 +20,9 @@ export default function LinkmeProfile() {
     
     // Cleanup
     return () => {
-      document.head.removeChild(styleSheet);
+      if (document.head.contains(styleSheet)) {
+        document.head.removeChild(styleSheet);
+      }
     };
   }, []);
 
@@ -105,33 +107,48 @@ export default function LinkmeProfile() {
           </div>
 
           {/* Favorite Text */}
-          <p style={styles.favoriteText}>Ele vem de moto,
-volta deixando saudade.
-Nickboy — seu corre +18
-
-Nem toda corrida é comportada.
-Confira as gostosuras aqui.
-Seu motorista 18+</p>
+          <p style={styles.favoriteText}>
+            Ele vem de moto,<br/>
+            volta deixando saudade.<br/>
+            Nickboy — seu corre +18<br/>
+            <br/>
+            Nem toda corrida é comportada.<br/>
+            Confira as gostosuras aqui.<br/>
+            Seu motorista 18+
+          </p>
 
           {/* Tabs */}
           <div style={styles.tabs}>
-
-            
+            <div 
+              style={{...styles.tab, ...(activeTab === 'shouts' ? styles.tabActive : styles.tabInactive)}}
+              onClick={() => setActiveTab('shouts')}
+            >
+              Shouts
+            </div>
+            <div 
+              style={{...styles.tab, ...(activeTab === 'media' ? styles.tabActive : styles.tabInactive)}}
+              onClick={() => setActiveTab('media')}
+            >
+              Media
             </div>
           </div>
 
           {/* No Content */}
           <div style={styles.noContent}>
-            
+            <div style={styles.noContentEmoji}>💬</div>
+            <h3 style={styles.noContentTitle}>No Shouts yet!</h3>
+            <p style={styles.noContentText}>
+              Shouts posted by Nick will<br/>appear here
+            </p>
           </div>
         </div>
 
         {/* Footer */}
         <div style={styles.footer}>
           <div style={styles.footerBranding}>
-<div style={styles.footerAvatar}>
-  <img src={img1} alt="Avatar" style={styles.avatarImg} />
-</div>
+            <div style={styles.footerAvatar}>
+              <img src={img1} alt="Avatar" style={styles.avatarImg} />
+            </div>
             <div style={styles.footerLogo}>me</div>
           </div>
           <div style={styles.footerText}>Create Your Profile On Linkme</div>
@@ -159,16 +176,6 @@ const styles = {
     padding: 0,
     color: '#fff',
     margin: 0,
-  },
-  footerAvatar: {
-    width: "60px",
-    height: "60px",
-  },
-  avatarImg: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    borderRadius: "50%",
   },
   profileContainer: {
     width: '100%',
@@ -300,6 +307,7 @@ const styles = {
     color: '#fff',
     marginBottom: '24px',
     fontWeight: 400,
+    lineHeight: '1.6',
   },
   tabs: {
     display: 'flex',
@@ -361,10 +369,15 @@ const styles = {
     marginBottom: '14px',
   },
   footerAvatar: {
-    width: '36px',
-    height: '36px',
+    width: '60px',
+    height: '60px',
     borderRadius: '50%',
-    background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+    overflow: 'hidden',
+  },
+  avatarImg: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
   },
   footerLogo: {
     width: '36px',
