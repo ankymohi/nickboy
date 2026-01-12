@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-
+import img1 from "../assets/photo1.jpg";
+import img2 from "../assets/photo2.jpg";
+import img3 from "../assets/photo3.jpg";
+import img4 from "../assets/photo4.jpg";
 export default function LinkmeProfile() {
   const [activeTab, setActiveTab] = useState('shouts');
 
