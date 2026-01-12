@@ -70,26 +70,40 @@ export default function LinkmeProfile() {
             <svg style={styles.whatsappIconLeft} viewBox="0 0 24 24" fill="none">
               <path d="M12 2C6.48 2 2 6.48 2 12c0 1.87.52 3.62 1.42 5.12L2 22l5.12-1.42C8.62 21.48 10.37 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.45 14.36c-.23.64-1.35 1.24-1.87 1.3-.52.06-1.01.24-3.42-.72-2.89-1.15-4.73-4.09-4.88-4.28-.14-.19-1.18-1.57-1.18-2.99 0-1.42.75-2.12 1.02-2.41.27-.29.59-.36.79-.36.2 0 .4 0 .57.01.18.01.43-.07.67.51.24.58.83 2.03.9 2.18.07.15.12.33.02.52-.1.19-.15.31-.29.48-.14.17-.29.38-.42.51-.14.14-.28.29-.12.57.16.28.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.27 1.4.28.14.45.12.62-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.92.28.14.47.21.54.33.07.12.07.69-.16 1.33z" fill="#ef4444"/>
             </svg>
-            <button style={styles.whatsappButton} onClick={() => window.open('https://wa.me/', '_blank')}>
-              Vem falar comigo
-            </button>
+           <button
+  style={styles.whatsappButton}
+  onClick={() =>
+    window.open("https://wa.me/5511982135639", "_blank")
+  }
+>
+                          Vem falar comigo
+
+</button>
+
+
           </div>
 
           {/* Exclusive Content Button */}
-          <button style={styles.exclusiveButton} onClick={() => alert('Conteúdo exclusivo!')}>
-            <svg style={styles.exclusiveIcon} viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="2" fill="#fff"/>
-              <circle cx="12" cy="4" r="1.5" fill="#fff"/>
-              <circle cx="12" cy="20" r="1.5" fill="#fff"/>
-              <circle cx="4" cy="12" r="1.5" fill="#fff"/>
-              <circle cx="20" cy="12" r="1.5" fill="#fff"/>
-              <circle cx="7" cy="7" r="1" fill="#fff"/>
-              <circle cx="17" cy="7" r="1" fill="#fff"/>
-              <circle cx="7" cy="17" r="1" fill="#fff"/>
-              <circle cx="17" cy="17" r="1" fill="#fff"/>
-            </svg>
-            Conteúdo exclusivo
-          </button>
+         <button
+  style={styles.exclusiveButton}
+  onClick={() =>
+    window.open("https://www.nickboy.com.br/", "_blank")
+  }
+>
+  <svg style={styles.exclusiveIcon} viewBox="0 0 24 24" fill="none">
+    <circle cx="12" cy="12" r="2" fill="#fff"/>
+    <circle cx="12" cy="4" r="1.5" fill="#fff"/>
+    <circle cx="12" cy="20" r="1.5" fill="#fff"/>
+    <circle cx="4" cy="12" r="1.5" fill="#fff"/>
+    <circle cx="20" cy="12" r="1.5" fill="#fff"/>
+    <circle cx="7" cy="7" r="1" fill="#fff"/>
+    <circle cx="17" cy="7" r="1" fill="#fff"/>
+    <circle cx="7" cy="17" r="1" fill="#fff"/>
+    <circle cx="17" cy="17" r="1" fill="#fff"/>
+  </svg>
+  Conteúdo exclusivo
+</button>
+
 
           {/* Image Grid */}
           <div style={styles.imageGrid}>
