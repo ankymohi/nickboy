@@ -217,7 +217,7 @@ const styles = {
   whatsappButton: {
     width: '100%',
     padding: '16px 24px',
-    background: 'transparent',
+background: '#22c55e',
     border: '2px solid #ef4444',
     borderRadius: '50px',
     color: '#fff',
@@ -230,7 +230,7 @@ const styles = {
   exclusiveButton: {
     width: '100%',
     padding: '18px 24px',
-    background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+background: '#22c55e',
     border: 'none',
     borderRadius: '50px',
     color: '#fff',
