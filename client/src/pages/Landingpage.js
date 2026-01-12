@@ -47,7 +47,7 @@ export default function LinkmeProfile() {
                   <circle cx="17.5" cy="6.5" r="1.2" fill="#E4405F"/>
                 </svg>
               </div>
-              <div style={styles.socialIcon} onClick={() => alert('Link profile')}>
+              <div style={styles.socialIcon} onClick={() => window.open('https://www.nickboy.com.br/', '_blank')}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#171717" strokeWidth="2.5" strokeLinecap="round"/>
                   <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#171717" strokeWidth="2.5" strokeLinecap="round"/>
@@ -73,7 +73,7 @@ export default function LinkmeProfile() {
            <button
   style={styles.whatsappButton}
   onClick={() =>
-    window.open("https://wa.me/5511982135639", "_blank")
+    window.open("https://wa.me/5511981447980", "_blank")
   }
 >
                           Vem falar comigo
