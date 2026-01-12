@@ -254,10 +254,12 @@ const plans = [
 <section className="vgd-hero">
   <div className="vgd-hero-content">
     <h1 className="vgd-hero-title">
-      Ele vem de moto, volta deixando saudade.<br />
-      Nickboy — seu corre 
-      <span class="vgd-hero-18-badgeName">+18 </span>
-    </h1>
+  Nem toda corrida é comportada.<br />
+  Confira as gostosuras aqui.<br />
+  Seu motorista
+  <span className="vgd-hero-18-badgeName"> 18+ </span>
+</h1>
+
     <button className="vgd-hero-btn" onClick={() => navigate("/login")}>Assine agora</button>
   </div>
 </section>
