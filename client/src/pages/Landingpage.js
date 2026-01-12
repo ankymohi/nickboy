@@ -37,7 +37,7 @@ export default function LinkmeProfile() {
           
           <div style={styles.profileOverlay}>
             <h1 style={styles.profileName}>Nick</h1>
-            <p style={styles.profileHandle}>@nickboyofc.</p>
+            <p style={styles.profileHandle}>@nickboyofc</p>
             
             <div style={styles.socialIcons}>
               <div style={styles.socialIcon} onClick={() => window.open('https://instagram.com/nickboyofc', '_blank')}>
