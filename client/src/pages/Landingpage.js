@@ -105,15 +105,7 @@ export default function LinkmeProfile() {
           </div>
 
           {/* Favorite Text */}
-          <p style={styles.favoriteText}>
-            Ele vem de moto,<br/>
-            volta deixando saudade.<br/>
-            Nickboy — seu corre +18<br/>
-            <br/>
-            Nem toda corrida é comportada.<br/>
-            Confira as gostosuras aqui.<br/>
-            Seu motorista 18+
-          </p>
+          
         </div>
 
         {/* Footer */}
