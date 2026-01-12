@@ -269,20 +269,7 @@ const plans = [
 
 
 
-      {/* GALLERY SECTION */}
-      <section id="gallery" className="vgd-gallery">
-        <h2 className="vgd-hero-title">Amostras (pré-visualização)</h2>
-        <p>O conteúdo completo estará disponível após a compra de um plano.</p>
-        <div className="vgd-gallery-grid">
-          {[img1, img2, img3, img4,].map((image, i) => (
-  <div key={i} className="vgd-gallery-item">
-    <img src={image} alt={`Preview ${i + 1}`} />
-    <span className="vgd-preview-badge">Prévia</span>
-  </div>
-))}
-
-        </div>
-      </section>
+     
 
       {/* ✅ Subscription Plans */}
       <section className="vgd-section">
